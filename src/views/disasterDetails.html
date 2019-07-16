@@ -1,0 +1,12 @@
+{{#if disasterData.error}}
+	{{disasterData.error}}
+{{else}}
+	<p><b>Location:</b> {{disasterData.city}}, {{#if disasterData.state}}{{disasterData.state}}, {{/if}}{{disasterData.country}}</p>
+	<p><b>Disaster Type:</b> {{disasterData.type}}</p>
+	<p><b>Latitude:</b> {{disasterData.latitude}}</p>
+	<p><b>Longitude:</b> {{disasterData.longitude}}</p>
+	<p><b>Description:</b> {{disasterData.description}}</p>
+	<p>&nbsp;</p>
+{{/if}}
+
+<p><a href='/disaster/list'>Back to Disaster List</a></p>

@@ -1,0 +1,8 @@
+New and improved disaster list.  We need Dylan's pretty HTML here<br><br>
+
+<ol>
+{{#each disasters}}
+	<li><a href='/disaster/detail/{{disasterID}}'>{{type}} in {{city}}, {{country}}</a> (<a href='/donations/list/{{disasterID}}'>list donations</a>)</li>
+{{/each}}
+</ol>
+<p><a href='/disaster'>Disaster Page</a></p>
