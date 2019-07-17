@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: orgs.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: orgs.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const Cloudant = require('@cloudant/cloudant');
+const cloudant = Cloudant({
+    account:"ServiceId-3433c9c5-2f5e-46a5-8a60-f899ff657dac",
+    key:"froldedsteatchadedintarn",
+    password:"db24ed72b829a14c9b79c4847cb566d2f6e1e422",
+    url:"https://a2777322-7e2f-4f00-88ff-5544d827c57f-bluemix.cloudant.com"
+});
+const orgDB = cloudant.db.use('organizations');
+const uuidv4 = require('uuid/v4');
+
+/**
+ * Organization
+ */
+class Org{
+    /**
+     * Create an Organization
+     * @param {object} orgData
+     */
+    constructor (orgData = {}){
+        this.oid = orgData.oid;
+        this.name = orgData.name;
+        this.createdBy = orgData.createdBy;
+        this.admins = orgData.admins; // Array of UIDs
+        this.members = orgData.members; // Array of UIDs
+    }
+
+    /**
+     * Fills Organization data from DB
+     * @param {string} oid
+     * @returns {Promise&lt;this>}
+     */
+    get(oid){
+        // Allow a oid to be passed w/ get method
+        if (oid !== undefined){
+            this.uid = oid;
+        }
+
+        return orgDB.get(this.uid).then(data => {
+
+            this.oid = data.oid;
+            this.name = data.name;
+            this.createdBy = data.createdBy;
+            this.admins = data.admins;
+            this.members = data.members;
+
+            return Promise.resolve(this);
+        }).catch(err => {
+            return Promise.reject(err);
+        });
+    }
+
+    /**
+     * Pushes Organization data to DB
+     * @returns {Promise}
+     */
+    push(){
+        // Ensure all values are filled
+        if(this.oid === undefined){
+            return Promise.reject('oid is undefined. Cannot push to DB.');
+        }
+        if(this.name === undefined){
+            return Promise.reject('name is undefined. Cannot push to DB.');
+        }
+        if(this.createdBy === undefined){
+            return Promise.reject('createdBy is undefined. Cannot push to DB.');
+        }
+        if(this.admins === undefined){
+            return Promise.reject('admins is undefined. Cannot push to DB.');
+        }
+        if(this.members === undefined){
+            return Promise.reject('members is undefined. Cannot push to DB.');
+        }
+
+
+        // Object to send to DB
+        const orgData = {
+            oid: this.oid,
+            name: this.name,
+            createdBy: this.createdBy,
+            admins: this.admins,
+            members: this.members
+        };
+
+        // Send to DB
+        return orgDB.insert(orgData, this.oid).then(() => {
+            return Promise.resolve();
+        }).catch((err) => {
+            return Promise.reject(err);
+        });
+    }
+
+    addMember(){
+
+    }
+
+    addAdmin(){
+
+    }
+}
+
+/**
+ * List organizations
+ * @returns {Promise&lt;orgList>}
+ */
+function listOrgs() {
+    return orgDB.list().then(r => {
+        return Promise.resolve(r.rows);
+    }).catch((err) => {
+        return Promise.reject(err);
+    });
+}
+
+/**
+ * Creates a new organization
+ * @param req
+ * @param res
+ */
+function newOrg(req,res) {
+
+    let orgData = {
+        oid: uuidv4(),
+        name: req.body.orgName,
+        createdBy: req.session.userData.uid,
+        admins: [req.session.userData.uid],
+        members: [req.session.userData.uid]
+    };
+
+    let newOrg = new Org(orgData);
+    newOrg.push().then(()=>{
+        res.redirect('/organization/' + orgData.oid);
+    }).catch(err => {
+        res.send(err);
+    });
+}
+
+module.exports = {
+    newOrg,
+    Org
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Org.html">Org</a></li><li><a href="User.html">User</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_render">_render</a></li><li><a href="global.html#blockchainRequest">blockchainRequest</a></li><li><a href="global.html#checkPass">checkPass</a></li><li><a href="global.html#fetchUser">fetchUser</a></li><li><a href="global.html#getPageTitle">getPageTitle</a></li><li><a href="global.html#hashPass">hashPass</a></li><li><a href="global.html#listOrgs">listOrgs</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#newOrg">newOrg</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#uidFromEmail">uidFromEmail</a></li><li><a href="global.html#utils">utils</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Jul 17 2019 05:57:19 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

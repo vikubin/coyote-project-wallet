@@ -1,0 +1,19 @@
+<h1>{{name}}</h1>
+
+
+<p>ID: {{oid}}</p>
+<p>Created By: {{createdBy}}</p>
+
+<h3>Admins</h3>
+<ol>
+    {{#each admins}}
+    <li>{{this}}</li>
+    {{/each}}
+</ol>
+
+<h3>Members</h3>
+<ol>
+    {{#each members}}
+    <li>{{this}}</li>
+    {{/each}}
+</ol>

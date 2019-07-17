@@ -8,6 +8,7 @@ const path = require('path');
 // Server-side scripts
 const utils = require('./scripts/utils');
 const auth = require('./scripts/auth');
+const orgs = require('./scripts/orgs');
 
 
 app.set('views', __dirname + '/views');
@@ -33,7 +34,7 @@ app.use(session({
 
 
 // Set up static styles directory
-app.use(express.static(path.join(__dirname,'assets')));
+app.use('/s',express.static('static'));
 
 // register handlebars
 app.engine('html', exphbs( {
@@ -52,6 +53,9 @@ const donor = require('./scripts/donor.controller');
 const resource = require('./scripts/resource.controller');
 const donation = require('./scripts/donation.controller');
 const errorPage = require('./scripts/errorPage.controller');
+const organization = require('./scripts/organization.controller');
+const settings = require('./scripts/settings.controller');
+const admin = require('./scripts/admin.controller');
 
 
 // Other variables needed
@@ -82,13 +86,17 @@ app.get('/', (req,res) => {
 });
 
 app.get('/login', (req,res) => {
-    external.login(req,res);
+    if(req.session.loggedIn !== true){
+        external.login(req,res);
+    }else{
+        res.redirect('/index');
+    }
 });
 app.post('/login', (req,res) => {
-	auth.loginUser(req,res).then(userData=>{
-        req.session.loggedIn = true;
-        req.session.userData = userData;
+	auth.loginUser(req.body.email, req.body.pass, req).then(()=>{
         res.redirect(303, '/index');
+    }).catch(err => {
+        res.send(err);
     });
 });
 
@@ -99,12 +107,16 @@ app.post('/register', (req,res) => {
 	auth.register(req,res);
 });
 
-// Log Requests
+// Authenticate Further Requests
 app.use((req,res,next)=>{
     console.log('__   Internal Request   __');
     console.log('Session Data:', req.session);
     console.log('==========================');
-    next();
+    if(req.session.loggedIn !== true){
+    	res.redirect('/login');
+	}else{
+        next();
+	}
 });
 
 app.get('/logout', (req,res)=>{
@@ -279,6 +291,34 @@ app.get('/donations?/list', (req,res) => {
 app.get('/donations/list/:disasterID', (req,res) => {
 	donation.listDonations({ req, res });
 });
+
+
+
+// Create a new organization form
+app.get('/organizations?/new', (req,res) => {
+	organization.render.creationForm(req,res);
+});
+app.post('/organizations?/new', (req,res) => {
+	orgs.newOrg(req,res);
+});
+app.get('/organization/:orgID', (req,res) => {
+    organization.render.organization(req,res,req.params.orgID);
+});
+
+
+
+// Account Settings
+app.get('/settings', (req,res) => {
+	settings.render(req,res);
+});
+
+
+
+// Admin Page
+app.get('/admin', (req,res) => {
+    admin.render(req,res);
+});
+
 
 /******************* 404 error page */
 app.get('*', (req,res) => {
