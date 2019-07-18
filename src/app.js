@@ -1,19 +1,31 @@
 // App
+
 // Requires
 const express = require('express');
 const app = express();
 const exphbs = require('express-handlebars');
-const path = require('path');
 
 // Server-side scripts
 const utils = require('./scripts/utils');
 const auth = require('./scripts/auth');
 const orgs = require('./scripts/orgs');
 
+// Page controllers
+const external = require('./scripts/external.controller');
+const index = require('./scripts/index.controller');
+const disaster = require('./scripts/disaster.controller');
+const donor = require('./scripts/donor.controller');
+const resource = require('./scripts/resource.controller');
+const donation = require('./scripts/donation.controller');
+const errorPage = require('./scripts/errorPage.controller');
+const organization = require('./scripts/organization.controller');
+const settings = require('./scripts/settings.controller');
+const admin = require('./scripts/admin.controller');
 
-app.set('views', __dirname + '/views');
-app.set('view engine', 'html');
 
+
+// Static Content
+app.use('/s',express.static('static'));
 
 // Session Management
 const session = require('express-session');
@@ -31,35 +43,6 @@ app.use(session({
         password: 'spGkyRUqP6Q7Ig5dmMBOKjRO5IpBeOmz'
     })
 }));
-
-
-// Set up static styles directory
-app.use('/s',express.static('static'));
-
-// register handlebars
-app.engine('html', exphbs( {
-	extname: '.html',
-	defaultView: 'index',
-	defaultLayout: 'main',
-	layoutsDir: __dirname + '/views/layouts',
-	partialsDir: __dirname + '/views/partials'
-}));
-
-// Page controllers
-const external = require('./scripts/external.controller');
-const index = require('./scripts/index.controller');
-const disaster = require('./scripts/disaster.controller');
-const donor = require('./scripts/donor.controller');
-const resource = require('./scripts/resource.controller');
-const donation = require('./scripts/donation.controller');
-const errorPage = require('./scripts/errorPage.controller');
-const organization = require('./scripts/organization.controller');
-const settings = require('./scripts/settings.controller');
-const admin = require('./scripts/admin.controller');
-
-
-// Other variables needed
-let pageData = {}; // data that will be passed to the page to display
 
 // Parse Requests
 app.use(express.json());
@@ -80,11 +63,28 @@ app.use((req,res,next)=>{
     next();
 });
 
+// Handlebars
+app.set('views', __dirname + '/views');
+app.set('view engine', 'html');
+app.engine('html', exphbs( {
+	extname: '.html',
+	defaultView: 'index',
+	defaultLayout: 'main',
+	layoutsDir: __dirname + '/views/layouts',
+	partialsDir: __dirname + '/views/partials'
+}));
+
+// Other variables needed
+let pageData = {}; // data that will be passed to the page to display
+
+
+
 // External pages
 app.get('/', (req,res) => {
 	external.landing(req,res);
 });
 
+// Login page and submission
 app.get('/login', (req,res) => {
     if(req.session.loggedIn !== true){
         external.login(req,res);
@@ -100,6 +100,7 @@ app.post('/login', (req,res) => {
     });
 });
 
+// Registration page and submission
 app.get('/register', (req,res) => {
     external.register(req,res);
 });
@@ -119,25 +120,24 @@ app.use((req,res,next)=>{
 	}
 });
 
+// Logout request
 app.get('/logout', (req,res)=>{
     req.session.destroy();
     res.redirect('/');
 });
 
-/******************* Index Page */
+// Index Page
 app.get('/index', (req,res) => {
 	index.render(req,res);
 });
 
+// Setup all blockchains TODO: Remove from PROD
 app.get('/setup', (req, res) => {
     index.setupAll(req,res);
 });
 
 
-/////////// ALl routes here need set up in their respective controllers
-/******************* Disaster Routes */
-// get page
-// Disaster Actions
+// Disaster Page
 app.get('/disaster', (req,res) => {
 	disaster.render(req,res,{});
 });
@@ -153,9 +153,7 @@ app.get('/disasters?/new', (req,res) => {
 app.get('/disasters?/detail/:disasterID', (req,res) => {
 	disaster.disasterDetail({ req, res });
 });
-
-/** Disaster Admin */
-// add
+// Add Disaster
 app.get('/api/blockchain/disaster/add', (req,res) => {
 
     console.log("'/api/blockchain/disaster/add' received data: ", req.query);
@@ -164,10 +162,7 @@ app.get('/api/blockchain/disaster/add', (req,res) => {
 });
 
 
-
-/******************* Donor Routes */
-// get page
-// Donor Actions
+// Donor Page
 app.get('/donors?', (req,res) => {
 	donor.render(req,res,pageData);
 });
@@ -183,9 +178,7 @@ app.get('/donors?/new', (req,res) => {
 app.get('/donors?/detail/:donorID', (req,res) => {
     donor.donorDetail({ req, res });
 });
-
-/** Donor Admin */
-// add
+// Add Donor
 app.get('/api/blockchain/donor/add', (req,res) => {
 
     utils.blockchainRequest('post','/donor/new',{
@@ -201,31 +194,25 @@ app.get('/api/blockchain/donor/add', (req,res) => {
 });
 
 
-/******************* Resource Routes */
-// get page
+// Resource Page
 app.get('/resource', (req,res) => {
 	resource.render(req,res,pageData);
 });
-
-// list resouces
+// List Resources
 app.get('/resources?/list', (req,res) => {
 	resource.listResources({ req, res });
 });
-
-// add
+// Add Resources
 app.get('/resource/addInitialResources', (req,res) => {
 	resource.addInitialResources({ req, res });
 });
 
 
-
-/******************* Donation Routes */
-// get page
+// Donation Page
 app.get('/donation', (req,res) => {
 	donation.render(req,res,pageData);
 });
-
-// add [TODO: change contents]
+// Add Donation
 app.get('/donor/addDonation', (req,res) => {
 	// get donor info from donor #1
 	const donorBlockData = donorBlockchain.chain[1];
@@ -266,9 +253,8 @@ app.get('/donor/addDonation', (req,res) => {
 	donationBlockchain.mine();
 	res.redirect(303, `/donations/list`);
 });
-
-// list
-app.get('/donations?/list', (req,res) => {
+// List Donations
+/*app.get('/donations?/list', (req,res) => {
 	// list all donations
 	const donationBlock = donationBlockchain.chain[1];
 	const donations = donationBlock.donations;
@@ -285,13 +271,11 @@ app.get('/donations?/list', (req,res) => {
 	});
 
 	res.send(`<a href='/donation'>Donation Home</a><br><br>${output}`);
-});
-
+});*/ // Obsolete?
 // List all donated resouces for a given disaster
 app.get('/donations/list/:disasterID', (req,res) => {
 	donation.listDonations({ req, res });
 });
-
 
 
 // Create a new organization form
@@ -306,12 +290,10 @@ app.get('/organization/:orgID', (req,res) => {
 });
 
 
-
 // Account Settings
 app.get('/settings', (req,res) => {
 	settings.render(req,res);
 });
-
 
 
 // Admin Page
@@ -320,7 +302,7 @@ app.get('/admin', (req,res) => {
 });
 
 
-/******************* 404 error page */
+// 404 Error
 app.get('*', (req,res) => {
 	errorPage.render(req,res);
 });
