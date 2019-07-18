@@ -6,7 +6,7 @@
   "scripts": {
     "test": "ls -l",
     "start": "nodemon --watch src -e js src/app.js",
-    "doc":"jsdoc -c conf/jsdoc.json",
+    "doc": "jsdoc -c conf/jsdoc.json",
     "static": "npm-run-all --parallel static-js static-css",
     "static-js": "npm-run-all babel-js min-js",
     "static-css": "npm-run-all compile-scss min-css",
