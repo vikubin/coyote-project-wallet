@@ -80,6 +80,8 @@ class User{
             this.email = data.email;
             this.org = data.org;
             this.pass = data.pass;
+            this._id = data._id;
+            this._rev = data._rev;
 
             return Promise.resolve(this);
         }).catch(err => {
@@ -116,7 +118,7 @@ class User{
         }
 
         // Object to send to DB
-        const userData = {
+        let userData = {
             uid: this.uid,
             fName: this.fName,
             lName: this.lName,
@@ -126,10 +128,26 @@ class User{
             pass: this.pass
         };
 
-        // Send to DB
-        return userDB.insert(userData, this.uid).then(() => {
-            return Promise.resolve();
-        }).catch((err) => {
+        return this.existsInDB().then(exists => {
+            console.log('Exists: ' + exists);
+            if(exists === false){
+                // Update Record
+                if(this._id === undefined || this._rev === undefined){
+                    return Promise.reject(Error('Missing required _id and _rev vars for user update'))
+                }
+
+                // Insert vars required for update
+                userData._id = this._id;
+                userData._rev = this._rev;
+            }
+
+            // Send to DB
+            return userDB.insert(userData, this.uid).then(() => {
+                return Promise.resolve('Pushed to DB');
+            }).catch((err) => {
+                return Promise.reject(Error(err));
+            });
+        }).catch(err => {
             return Promise.reject(err);
         });
     }
@@ -142,7 +160,34 @@ class User{
     validatePassword(password){
         return (bcrypt.compareSync(password, this.pass));
     }
+
+    /**
+     * Checks if user is in DB
+     * @param {string} uid - Optional
+     * @returns {Promise<boolean>}
+     */
+    existsInDB(uid){
+        if (uid === undefined){
+            uid = this.uid;
+        }
+        console.log('Checking if ' + uid + ' exists in DB.');
+
+        return userDB.find({selector: {"uid": {"$eq":uid}}}).then(result => {
+
+            // No matching users
+            if(result.docs.length === 0){
+                return Promise.resolve(false);
+            }
+
+            // Exactly one matching user
+            return Promise.resolve(true);
+        }).catch(err => {
+            return Promise.reject(err);
+        });
+
+    }
 }
+
 
 /**
  * Creates a new User instance and gets data from the DB.
