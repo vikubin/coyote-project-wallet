@@ -1,44 +1,57 @@
-<div class="container" style="padding: 20px 0">
-    <form action="/register" method="post">
+<div class="row">
+    <div class="container">
+        <div class="row">
+            <div id="register-showcase"class="col-md-8"></div>
+            <div id="register-form"class="col-md-4">
+                <form action="/register" method="post">
+                    <!-- Page One: First, Last, Organization -->
+                    <div id="page1" >
+                        <h1>Register</h1>
 
-        <h1>Register</h1>
+                        <div class="form-group">
+                            <label for="fName">First Name</label>
+                            <input id="fName" name="fName" type="text" aria-label="First name" class="form-control" required>
+                        </div>
 
-        <div class="form-group">
-            <label for="fName">First Name</label>
-            <input id="fName" name="fName" type="text" aria-label="First name" class="form-control" required>
+                        <div class="form-group">
+                            <label for="lName">Last Name</label>
+                            <input id="lName" name="lName" type="text" aria-label="Last name" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="organization">Organization</label>
+                            <select id="organization" name="organization" class="form-control">
+                                <option value="none" selected>none</option>
+                                {{{organizationOptionList}}}
+                            </select>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block" onclick="$('#page1').hide();$('#page2').show()">Next</button>
+                    </div>
+
+                    <!-- Page Two: Email, Password, Repeat Password -->
+
+                    <div id="page2" style="display:none">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input id="email" name="email" type="email" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pass1">Password</label>
+                            <input id="pass1" name="pass1" type="password" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pass2">Repeat Password</label>
+                            <input id="pass2" name="pass2" type="password" class="form-control" required>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+                        <div class="text-right">
+                            <p>Already have an account? <a href="/login">Log In</a></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="lName">Last Name</label>
-            <input id="lName" name="lName" type="text" aria-label="Last name" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-            <label for="organization">Organization</label>
-            <select id="organization" name="organization" class="form-control">
-                <option value="none" selected>none</option>
-                {{{organizationOptionList}}}
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-            <label for="pass1">Password</label>
-            <input id="pass1" name="pass1" type="password" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-            <label for="pass2">Repeat Password</label>
-            <input id="pass2" name="pass2" type="password" class="form-control" required>
-        </div>
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-        <div class="text-right">
-            <p>Already have an account? <a href="/login">Log In</a></p>
-        </div>
-    </form>
+    </div>
 </div>
