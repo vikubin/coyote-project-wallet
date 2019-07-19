@@ -75,7 +75,7 @@ app.engine('html', exphbs( {
 }));
 
 // Other variables needed
-let pageData = {}; // data that will be passed to the page to display
+let pageData = {};  // data that will be passed to the page to display
 
 
 
@@ -155,9 +155,7 @@ app.get('/disasters?/detail/:disasterID', (req,res) => {
 });
 // Add Disaster
 app.get('/api/blockchain/disaster/add', (req,res) => {
-
     console.log("'/api/blockchain/disaster/add' received data: ", req.query);
-
     disaster.addDisaster(req,res);
 });
 
@@ -180,7 +178,6 @@ app.get('/donors?/detail/:donorID', (req,res) => {
 });
 // Add Donor
 app.get('/api/blockchain/donor/add', (req,res) => {
-
     utils.blockchainRequest('post','/donor/new',{
         email: req.query.email,
         fname: req.query.fname,
@@ -214,6 +211,9 @@ app.get('/donation', (req,res) => {
 });
 // Add Donation
 app.get('/donor/addDonation', (req,res) => {
+
+    // TODO: Modify this to work with the split app
+
 	// get donor info from donor #1
 	const donorBlockData = donorBlockchain.chain[1];
 	const donor = donorBlockData.donors[0];
@@ -247,7 +247,7 @@ app.get('/donor/addDonation', (req,res) => {
 		resources: resources,
 		sendDate: null,
 		arriveDate: null
-	}
+	};
 
 	donationBlockchain.addDonationToPendingDonations(donationBlockchain.createNewDonation(donationObject));
 	donationBlockchain.mine();
@@ -294,7 +294,6 @@ app.get('/organization/:orgID', (req,res) => {
 app.get('/settings', (req,res) => {
 	settings.render(req,res);
 });
-
 
 // Admin Page
 app.get('/admin', (req,res) => {
