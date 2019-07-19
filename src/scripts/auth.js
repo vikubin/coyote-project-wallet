@@ -126,7 +126,7 @@ function register(req,res) {
         fName: req.body.fName,
         lName: req.body.lName,
         dName: req.body.fName + ' ' + req.body.lName,
-        org: req.body.organization,
+        org: [req.body.organization],
         email: req.body.email,
         pass: req.body.pass1
     };

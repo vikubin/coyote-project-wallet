@@ -6,6 +6,8 @@ const cloudant = Cloudant({
     url:"https://a2777322-7e2f-4f00-88ff-5544d827c57f-bluemix.cloudant.com"
 });
 const orgDB = cloudant.db.use('organizations');
+const User = require('./User');
+const auth = require('../auth');
 
 /**
  * A class that represents an Organization
@@ -93,12 +95,138 @@ class Org{
         });
     }
 
-    addMember(){
+    /**
+     * Adds a User to the organization
+     * @param {string} uid
+     * @returns {Promise}
+     */
+    addMember(uid){
 
+        // Input validation
+        if(uid === undefined){
+            return Promise.reject('uid to add is undefined');
+        }
+
+        // Check if user is a member
+        if(this.members.includes(uid)){
+            return Promise.resolve('User is already a member.');
+        }
+
+        // Get member information
+        let newMember = new User({uid:uid});
+        return newMember.get().then(()=>{
+
+            // Add uid to Org's members list
+            this.members.push(uid);
+            // Update DB
+            return this.push();
+
+        }).then(()=>{
+
+            // Add oid to User's org list
+            return newMember.makeMember(this.oid)
+
+        }).catch(err => {
+            return Promise.reject(err);
+        });
     }
 
-    addAdmin(){
+    /**
+     * Removes a User from the organization
+     * @param {string} uid
+     * @returns {Promise}
+     */
+    removeMember(uid){
 
+        // Input validation
+        if(uid === undefined){
+            return Promise.reject('uid to remove is undefined');
+        }
+
+        // Check if user is a member
+        if(this.members.indexOf(uid) === -1){
+            return Promise.resolve('User is not a member.');
+        }
+
+        // Get member information
+        let newMember = new User({uid:uid});
+        return newMember.get().then(()=>{
+
+            // Remove uid from Org's members list
+            this.members.splice(this.members.indexOf(uid));
+            // Update DB
+            return this.push();
+
+        }).then(()=>{
+
+            // Remove oid from User's org list
+            return newMember.removeAsMember(this.oid);
+
+        }).catch(err => {
+            return Promise.reject(err);
+        });
+    }
+
+    /**
+     * Adds a User as an admin to the organization
+     * @param {string} uid
+     * @returns {Promise}
+     */
+    addAdmin(uid){
+
+        // Input validation
+        if(uid === undefined){
+            return Promise.reject('uid to add is undefined');
+        }
+
+        // Make user a member if not already
+        this.addMember(uid).then(()=>{
+
+            // Add uid to Org's members list
+            this.admins.push(uid);
+            // Update DB
+            return this.push();
+
+        }).catch(err => {
+            return Promise.reject(err);
+        });
+    }
+
+    /**
+     * Removes user from admin in an organization (Does not revoke membership)
+     * @param {string} uid
+     * @returns {Promise}
+     */
+    removeAdmin(uid){
+
+        // Input validation
+        if(uid === undefined){
+            return Promise.reject('uid to remove is undefined');
+        }
+
+        // Remove uid from Org's admins list
+        this.admins.splice(this.admins.indexOf(uid));
+        // Update DB
+        return this.push();
+    }
+
+    /**
+     * Rename the Organization
+     * @param {string} newName
+     * @returns {Promise}
+     */
+    changeName(newName){
+
+        // Validate input
+        if(typeof newName === 'string' && newName !== undefined){
+            return Promise.reject('New name ' + newName + ' not valid.');
+        }
+
+        // Update org name
+        this.name = newName;
+
+        // Update DB
+        return this.push();
     }
 }
 

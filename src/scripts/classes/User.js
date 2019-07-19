@@ -7,6 +7,7 @@ const cloudant = Cloudant({
 });
 const userDB = cloudant.db.use('users');
 const bcrypt = require('bcrypt');
+const Org = require('./Org');
 
 /**
  * Class representing an individual User
@@ -19,7 +20,7 @@ class User{
      * @param {string=} userData.fName - The user's First Name
      * @param {string=} userData.lName - The user's Last Name
      * @param {string=} userData.email - The user's Email
-     * @param {string=} userData.org - The user's Organization ID
+     * @param {array=} userData.org - The user's Organizations (Array of org IDs)
      */
     constructor (userData = {}){
         this.uid = userData.uid;
@@ -166,6 +167,154 @@ class User{
             return Promise.reject(err);
         });
 
+    }
+
+    /**
+     * Adds the user to an organization
+     * @param {string} oid
+     * @returns {Promise}
+     */
+    makeMember(oid){
+
+        // Input validation
+        if(oid === undefined){
+            return Promise.reject('oid to add is undefined');
+        }
+
+        // Check if user is a member
+        if(this.org.includes(oid)){
+            return Promise.resolve('User is already a member.');
+        }
+
+        let newOrg = new Org({oid:oid});
+        return newOrg.get().then(()=>{
+
+            // Add oid to User's org list
+            this.org.push(oid);
+            // Update DB
+            return this.push();
+
+        }).then(()=>{
+
+            // Add uid to Org's members list
+            return newOrg.addMember(this.uid);
+
+        }).catch(err => {
+            return Promise.reject(err);
+        });
+    }
+
+    /**
+     * Removes the user from an organization
+     * @param {string} oid
+     * @returns {Promise}
+     */
+    removeAsMember(oid){
+
+        // Input validation
+        if(oid === undefined){
+            return Promise.reject('oid to remove is undefined');
+        }
+
+        // Check if user is a member
+        if(this.org.indexOf(oid) === -1){
+            return Promise.resolve('User is not a member.');
+        }
+
+        let newOrg = new Org({oid:oid});
+        return newOrg.get().then(()=>{
+
+            // Remove oid from User's org list
+            this.org.splice(this.org.indexOf(oid));
+            // Update DB
+            return this.push();
+
+        }).then(()=>{
+
+            // Remove uid from Org's members list
+            return newOrg.removeMember(this.uid);
+
+        }).catch(err => {
+            return Promise.reject(err);
+        });
+
+    }
+
+    /**
+     * Adds the user as an admin to an organization
+     * @param {string} oid
+     * @returns {Promise}
+     */
+    makeAdmin(oid){
+
+        // Input validation
+        if(oid === undefined){
+            return Promise.reject('oid to use is undefined');
+        }
+
+        let newOrg = new Org({oid:oid});
+        return newOrg.get().then(()=>{
+
+            // Process in Org class
+            return newOrg.addAdmin(this.uid);
+
+        }).catch(err => {
+            return Promise.reject(err);
+        });
+
+    }
+
+    /**
+     * Removes the user from admin in an organization (Does not revoke membership)
+     * @param {string} oid
+     * @returns {Promise}
+     */
+    removeAsAdmin(oid){
+
+        // Input validation
+        if(oid === undefined){
+            return Promise.reject('oid to use is undefined');
+        }
+
+        let newOrg = new Org({oid:oid});
+        return newOrg.get().then(()=>{
+
+            // Process in Org class
+            return newOrg.removeAdmin(this.uid);
+
+        }).catch(err => {
+            return Promise.reject(err);
+        });
+
+    }
+
+    /**
+     * Changes user information
+     * @param {object=} userData - An object containing data to create the user with
+     * @param {string=} userData.fName - The user's First Name
+     * @param {string=} userData.lName - The user's Last Name
+     * @returns {Promise}
+     */
+    changeName(userData){
+
+        // Add Changes
+        if(userData.fName !== undefined){
+            this.fName = userData.fName;
+        }
+        if(userData.lName !== undefined){
+            this.lName = userData.lName;
+        }
+
+        // If no fName or lName
+        if(userData.fName === undefined && userData.lName === undefined){
+            return Promise.reject('No valid information for update.');
+        }
+
+        // Update dName
+        this.dName = this.fName + ' ' + this.lName;
+
+        // Update DB
+        return this.push();
     }
 }
 
