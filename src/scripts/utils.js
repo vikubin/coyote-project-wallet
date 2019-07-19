@@ -79,14 +79,29 @@ getPageTitle = template => {
 	return title;
 }; // end getPageTitle
 
+/**
+ * Generates an option list from a {key:value,key:value} object.
+ * @params {object} keyValObj - {key:value,key:value} object
+ * @returns {string} - an HTML option list
+ */
+function generateOptionList(keyValObj) {
+	let ids = Object.keys(keyValObj);
+
+	let html = '';
+	ids.forEach(id =>{
+		html += `<option value="${id}" selected>${keyValObj[id]}</option>\n`;
+	});
+
+	return html;
+}
+
 
 module.exports = {
 	render: _render,
-    blockchainRequest
+    blockchainRequest,
+	generateOptionList
 };
 
-
-console.log(axios.get('http://localhost:3000/disasters?id=test'));
 /*
 
 blockchainRequest('get','/donors').then(r => {

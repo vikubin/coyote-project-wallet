@@ -7,7 +7,6 @@ const cloudant = Cloudant({
 });
 const userDB = cloudant.db.use('users');
 const bcrypt = require('bcrypt');
-const Org = require('./Org');
 
 /**
  * Class representing an individual User
@@ -23,6 +22,8 @@ class User{
      * @param {array=} userData.org - The user's Organizations (Array of org IDs)
      */
     constructor (userData = {}){
+        console.log('Constructing User with data: ', userData);
+
         this.uid = userData.uid;
         this.fName = userData.fName;
         this.lName = userData.lName;
@@ -34,13 +35,15 @@ class User{
         if(userData.pass !== undefined){
             if(userData.pass.length !== 60){
                 // Probably not hashed as hashed passwords are 60 chars long
-                this.pass = hashPass(userData.pass)
+                this.pass = bcrypt.hashSync(userData.pass, 10);
             }else{
                 this.pass = userData.pass;
             }
         }else{
             this.pass = undefined;
         }
+
+        this.Org = require('./Org');
     }
 
     /**
@@ -112,7 +115,7 @@ class User{
 
         return this.existsInDB().then(exists => {
             console.log('Exists: ' + exists);
-            if(exists === false){
+            if(exists !== false){
                 // Update Record
                 if(this._id === undefined || this._rev === undefined){
                     return Promise.reject(Error('Missing required _id and _rev vars for user update'))
@@ -186,7 +189,7 @@ class User{
             return Promise.resolve('User is already a member.');
         }
 
-        let newOrg = new Org({oid:oid});
+        let newOrg = new this.Org({oid:oid});
         return newOrg.get().then(()=>{
 
             // Add oid to User's org list
@@ -221,7 +224,7 @@ class User{
             return Promise.resolve('User is not a member.');
         }
 
-        let newOrg = new Org({oid:oid});
+        let newOrg = new this.Org({oid:oid});
         return newOrg.get().then(()=>{
 
             // Remove oid from User's org list
@@ -252,7 +255,7 @@ class User{
             return Promise.reject('oid to use is undefined');
         }
 
-        let newOrg = new Org({oid:oid});
+        let newOrg = new this.Org({oid:oid});
         return newOrg.get().then(()=>{
 
             // Process in Org class
@@ -276,7 +279,7 @@ class User{
             return Promise.reject('oid to use is undefined');
         }
 
-        let newOrg = new Org({oid:oid});
+        let newOrg = new this.Org({oid:oid});
         return newOrg.get().then(()=>{
 
             // Process in Org class

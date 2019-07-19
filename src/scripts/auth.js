@@ -8,6 +8,7 @@ const cloudant = Cloudant({
 const userDB = cloudant.db.use('users');
 const bcrypt = require('bcrypt');
 const User = require('./classes/User');
+const Org = require('./classes/Org');
 const uuidv4 = require('uuid/v4');
 
 
@@ -120,13 +121,20 @@ function register(req,res) {
 
     // TODO: Validate
 
+    let org;
+    if(req.body.organization === 'none'){
+        org = [];
+    }else{
+        org = [req.body.organization];
+    }
+
     let uid = uuidv4();
     const userData = {
         uid: uid,
         fName: req.body.fName,
         lName: req.body.lName,
         dName: req.body.fName + ' ' + req.body.lName,
-        org: [req.body.organization],
+        org: org,
         email: req.body.email,
         pass: req.body.pass1
     };
@@ -156,6 +164,101 @@ function register(req,res) {
     }).catch(err=>{
         res.send(err);
     });
+}
+
+
+// Permissions
+
+/**
+ * Is a user admin of an organization?
+ * @param {string} uid - User's ID
+ * @param {string} oid - Organization ID
+ * @returns {Promise<boolean>} - True if uid is admin of oid; false otherwise
+ */
+function isOrgAdmin(uid,oid){
+    let org = new Org({oid:oid});
+    return org.get().then(()=>{
+        return Promise.resolve(org.isAdmin(uid));
+    }).catch(err => {
+        return Promise.reject(err);
+    });
+}
+
+/**
+ * Is a user member of an organization?
+ * @param {string} uid - User's ID
+ * @param {string} oid - Organization ID
+ * @returns {Promise<boolean>} - True if uid is member of oid; false otherwise
+ */
+function isOrgMember(uid,oid){
+    let org = new Org({oid:oid});
+    return org.get().then(()=>{
+        return Promise.resolve(org.isMember(uid));
+    }).catch(err => {
+        return Promise.reject(err);
+    });
+}
+
+
+function listUsers(resultType){
+    return orgDB.list().then(orgList =>{
+
+        console.log(orgList);   // For testing
+
+        switch (resultType){
+            case 'length':
+                return Promise.resolve(orgList.total_rows);
+            case 'ids':
+
+                let idArray = [];   // For return values
+                orgList.rows.forEach(row => {
+                    idArray.push(row.id);
+                });
+
+                return Promise.resolve(idArray);
+            case 'idName':
+
+                let idNameObj = {}; // For return values
+                let i = orgList.total_rows;
+
+                return new Promise((resolve,reject)=>{
+                    orgList.rows.forEach(row => {
+
+                        orgDB.get(row.id).then(orgData => {
+                            idNameObj[row.id] = orgData.name;
+                            i--;
+                            if(i === 0){
+                                resolve(idNameObj);
+                            }
+                        }).catch(err => {
+                            reject(err);
+                        });
+                    });
+                });
+
+            default:
+
+                let returnObj = {}; // For return values
+                let totalRows = orgList.total_rows;
+
+                return new Promise((resolve,reject)=>{
+                    orgList.rows.forEach(row => {
+
+                        orgDB.get(row.id).then(orgData => {
+                            returnObj[row.id] = orgData;
+                            totalRows--;
+                            if(totalRows === 0){
+                                resolve(returnObj);
+                            }
+                        }).catch(err => {
+                            reject(err);
+                        });
+                    });
+                });
+        }
+    }).catch(err => {
+        return Promise.reject(err);
+    })
 }
 
 module.exports = {

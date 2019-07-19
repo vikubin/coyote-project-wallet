@@ -6,8 +6,6 @@ const cloudant = Cloudant({
     url:"https://a2777322-7e2f-4f00-88ff-5544d827c57f-bluemix.cloudant.com"
 });
 const orgDB = cloudant.db.use('organizations');
-const User = require('./User');
-const auth = require('../auth');
 
 /**
  * A class that represents an Organization
@@ -28,6 +26,8 @@ class Org{
         this.createdBy = orgData.createdBy;
         this.admins = orgData.admins;       // Array of UIDs
         this.members = orgData.members;     // Array of UIDs
+
+        this.User = require('./User');
     }
 
     /**
@@ -38,16 +38,18 @@ class Org{
     get(oid){
         // Allow a oid to be passed w/ get method
         if (oid !== undefined){
-            this.uid = oid;
+            this.oid = oid;
         }
 
-        return orgDB.get(this.uid).then(data => {
+        return orgDB.get(this.oid).then(data => {
 
             this.oid = data.oid;
             this.name = data.name;
             this.createdBy = data.createdBy;
             this.admins = data.admins;
             this.members = data.members;
+            this._id = data._id;
+            this._rev = data._rev;
 
             return Promise.resolve(this);
         }).catch(err => {
@@ -113,7 +115,7 @@ class Org{
         }
 
         // Get member information
-        let newMember = new User({uid:uid});
+        let newMember = new this.User({uid:uid});
         return newMember.get().then(()=>{
 
             // Add uid to Org's members list
@@ -137,6 +139,7 @@ class Org{
      * @returns {Promise}
      */
     removeMember(uid){
+        console.log('starting removemember with uid: ' + uid);
 
         // Input validation
         if(uid === undefined){
@@ -148,9 +151,11 @@ class Org{
             return Promise.resolve('User is not a member.');
         }
 
+        console.log(this.User);
+
         // Get member information
-        let newMember = new User({uid:uid});
-        return newMember.get().then(()=>{
+        let memberToRemove = new this.User({uid:uid});
+        return memberToRemove.get().then(()=>{
 
             // Remove uid from Org's members list
             this.members.splice(this.members.indexOf(uid));
@@ -160,7 +165,7 @@ class Org{
         }).then(()=>{
 
             // Remove oid from User's org list
-            return newMember.removeAsMember(this.oid);
+            return memberToRemove.removeAsMember(this.oid);
 
         }).catch(err => {
             return Promise.reject(err);
@@ -227,6 +232,75 @@ class Org{
 
         // Update DB
         return this.push();
+    }
+
+    /**
+     * Check if a uid is an admin of the Org
+     * @param {string} uid - User ID to check
+     * @returns {boolean} - True if admin; False otherwise
+     */
+    isAdmin(uid){
+        return (this.admins.includes(uid));
+    }
+
+    /**
+     * Check if a uid is an member of the Org
+     * @param {string} uid - User ID to check
+     * @returns {boolean} - True if member; False member
+     */
+    isMember(uid){
+        return (this.members.includes(uid));
+    }
+
+    delete(){
+
+        // Remove all users
+        let userDeletion = new Promise((resolve,reject) => {
+
+            // Get the amount of members to delete
+            let memberAmt = this.members.length;
+
+            // Remove each member
+            this.members.forEach(member => {
+                console.log('Removing ' + member + ' as a member.');
+
+                // Create a User for each member
+                let memberDel = new this.User({uid:member});
+                // Load the User
+                memberDel.get().then(()=>{
+
+                    // Delete org manually to avoid revision conflicts
+                    memberDel.org.splice(memberDel.org.indexOf(this.oid));
+                    return memberDel.push();
+                }).then(()=>{
+
+                    // Decrement member count
+                    memberAmt--;
+
+                    // If last member, resolve
+                    if(memberAmt === 0){
+                        resolve('All Members Deleted');
+                    }
+                }).catch(err => {
+                    reject(err);
+                })
+            });
+        });
+
+        // Delete from DB
+        return Promise.all([
+            userDeletion
+        ]).then(status=>{
+            console.log(status);
+
+            // Delete org from DB
+            return orgDB.destroy(this.oid, this._rev);
+
+        }).catch(err=>{
+            console.error(err);
+            return Promise.reject(err);
+        })
+
     }
 }
 

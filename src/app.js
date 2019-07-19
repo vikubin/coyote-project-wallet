@@ -8,7 +8,6 @@ const exphbs = require('express-handlebars');
 // Server-side scripts
 const utils = require('./scripts/utils');
 const auth = require('./scripts/auth');
-const orgs = require('./scripts/orgs');
 
 // Page controllers
 const external = require('./scripts/external.controller');
@@ -25,7 +24,7 @@ const admin = require('./scripts/admin.controller');
 
 
 // Static Content
-app.use('/s',express.static('static'));
+app.use('/s',express.static('./src/static'));
 
 // Session Management
 const session = require('express-session');
@@ -278,13 +277,37 @@ app.get('/donations/list/:disasterID', (req,res) => {
 });
 
 
+// Organization API
+app.get('/organization/:oid/join', (req,res) => {
+    organization.member.add(req.params.oid,req.session.userData.uid).then(()=>{
+    	res.redirect('/organization/' + req.params.oid);
+	}).catch(err=>{
+		res.send(err);
+	});
+});
+app.get('/organization/:oid/leave', (req,res) => {
+    organization.member.remove(req.params.oid,req.session.userData.uid).then(()=>{
+    	res.redirect('/organization/' + req.params.oid);
+	}).catch(err=>{
+		res.send(err);
+	});
+});
+app.get('/organization/:oid/delete', (req,res) => {
+    organization.deleteOrg(req.params.oid).then(()=>{
+    	res.redirect('/admin');
+	}).catch(err=>{
+		res.send(err);
+	});
+});
+
 // Create a new organization form
 app.get('/organizations?/new', (req,res) => {
 	organization.render.creationForm(req,res);
 });
 app.post('/organizations?/new', (req,res) => {
-	orgs.newOrg(req,res);
+    organization.newOrg(req,res);
 });
+
 app.get('/organization/:orgID', (req,res) => {
     organization.render.organization(req,res,req.params.orgID);
 });

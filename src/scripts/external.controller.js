@@ -1,4 +1,5 @@
 const utils = require('./utils');
+const organization = require('./organization.controller');
 
 const render = {
     /**
@@ -10,7 +11,7 @@ const render = {
     landing(req,res,pageData = {}){
         let params = {
             template: "external/landing",
-            pageTile: "Donations",
+            pageTile: "Project Coyote",
             pageData: pageData
         };
         utils.render(req,res,params,"external");
@@ -24,7 +25,7 @@ const render = {
     login(req,res,pageData = {}){
         let params = {
             template: "external/login",
-            pageTile: "Donations",
+            pageTile: "Login",
             pageData: pageData
         };
 
@@ -37,12 +38,19 @@ const render = {
      * @param {object} pageData
      */
     register(req,res,pageData = {}){
-        let params = {
-            template: "external/register",
-            pageTile: "Donations",
-            pageData: pageData
-        };
-        utils.render(req,res,params,"external");
+
+        organization.listOrgs('idName').then(orgList => {
+
+            pageData.orgList = utils.generateOptionList(orgList);
+
+            let params = {
+                template: "external/register",
+                pageTile: "Register",
+                data: pageData
+            };
+            utils.render(req,res,params,"external");
+
+        });
     }
 };
 

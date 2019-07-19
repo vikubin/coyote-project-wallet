@@ -1,3 +1,25 @@
 
 <a href='/setup'>Setup All Blockchains at Once</a><br>
 <a href='/organization/new'>Create Organization</a>
+
+<div class="card">
+    <h2 class="card-header">Organizations</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each orgList}}
+        <tr>
+            <td><a href="/organization/{{oid}}" onclick="">{{name}}</a></td>
+            <td><a href="/organization/{{oid}}/delete" class="btn btn-danger btn-sm" onclick="deleteOrg('{{oid}}')">Delete</a></td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>

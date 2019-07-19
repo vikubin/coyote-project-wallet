@@ -1,4 +1,5 @@
 const utils = require('./utils');
+const organization = require('./organization.controller');
 const auth = require('./auth');
 
 /**
@@ -8,11 +9,24 @@ const auth = require('./auth');
  */
 function render(req,res) {
 
-    // Render Page
-    utils.render(req, res, {
-        template:"admin",
-        data: null
+    Promise.all([
+        organization.listOrgs()
+    ]).then(data => {
+
+        let pageData = {
+            orgList: data[0]
+        };
+
+        // Render Page
+        utils.render(req, res, {
+            template:"admin",
+            data: pageData
+        });
+
+    }).catch(err => {
+        res.send(err);
     });
+
 }
 
 module.exports = {
