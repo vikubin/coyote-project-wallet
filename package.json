@@ -10,10 +10,10 @@
     "static": "npm-run-all --parallel static-js static-css",
     "static-js": "npm-run-all babel-js min-js",
     "static-css": "npm-run-all compile-scss min-css",
-    "compile-scss": "node-sass static/css/coyote.scss -o static/css",
-    "min-css": "cleancss static/css/coyote.css -o static/css/coyote.min.css",
-    "babel-js": "babel static/js/coyote.js -o static/js/coyote.min.js --presets=babel-preset-env",
-    "min-js": "uglifyjs static/js/coyote.min.js -o static/js/coyote.min.js"
+    "compile-scss": "node-sass src/static/css/coyote.scss -o src/static/css",
+    "min-css": "cleancss src/static/css/coyote.css -o src/static/css/coyote.min.css",
+    "babel-js": "babel src/static/js/coyote.js -o src/static/js/coyote.min.js --presets=babel-preset-env",
+    "min-js": "uglifyjs src/static/js/coyote.min.js -o src/static/js/coyote.min.js"
   },
   "author": "Bob Deemer, Dylan Wiafe, Phil Kubin",
   "license": "ISC",
