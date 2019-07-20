@@ -1,20 +1,24 @@
 
-<div class="text-center container">
+<div class="text-center container login-container">
     <div class="row justify-content-md-center">
-        <form action="/login" method="post" class="col-lg-4" style="padding-top: calc(50vh - 190px)">
-            <h1>Please log in</h1>
+        <div class="col-md-2"></div>
+        <div class="col-md-2" id="login-form">
+            <form action="/login" method="post" style="padding-top: calc(50vh - 190px)">
+                <h1>Please log in</h1>
 
-            <label for="email" class="sr-only">Email</label>
-            <input name="email" id="email" type="email" value="test.user@email.com" class="form-control" required>
+                <label for="email" class="sr-only">Email</label>
+                <input name="email" id="email" type="email" value="test.user@email.com" class="form-control" required>
 
-            <label for="pass" class="sr-only">Password</label>
-            <input name="pass" id="pass" type="text" value="testtest" class="form-control" required>
+                <label for="pass" class="sr-only">Password</label>
+                <input name="pass" id="pass" type="text" value="testtest" class="form-control" required>
 
-            <br>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-            <div class="text-right">
-                <p>Don't have an account? <a href="/register">Register</a></p>
-            </div>
-        </form>
+                <br>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+                <div class="text-right">
+                    <p>Don't have an account? <a href="/register">Register</a></p>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-8"></div>
     </div>
 </div>

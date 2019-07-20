@@ -2,11 +2,56 @@
   margin-top: 40px;
 }
 
+/* styles for /views/external/register.html */
 
-#register-showcase {
-  background-color: coral;
-}
+  /* Left Side Div - Showcase */
 
-#register-form{
-  padding-top: 75px;
-}
+  .register-showcase {
+    height: calc(50vh - 35px);
+  }
+
+  #register-hero-showcase {
+    background-color: Coral;
+    margin-bottom: -20px;
+    z-index: 2;
+    text-align: center;
+    font-family
+
+
+      #hero-header{
+        padding-left: 20px;
+      }
+  }
+
+  #register-icon-showcase {
+    background-color: SeaGreen;
+    padding-bottom: 40px;
+    z-index: 1;
+  }
+
+  /* Right Side Div - Form */
+
+  #register-form {
+    padding-top: 75px;
+  }
+
+
+
+/* styles for /views/external/login.html */
+
+  /* Left Side Div- Form */
+
+  #login-form {
+    padding-top: 75px;
+  }
+
+  /* Right Side Div- Showcase */
+
+  .login-container {
+    height: calc(50vh - 35px);
+    margin-bottom: -20px;
+    z-index: 2;
+    background-image: url("/Stock-Mountain.png");
+  }
+
+
