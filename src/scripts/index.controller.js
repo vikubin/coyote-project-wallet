@@ -1,11 +1,28 @@
 const utils = require('./utils');
 
 function _render(req,res,pageConfig={}) {
-	let params = {
-		template: 'index',
-		data: {}
-	};
-	utils.render(req,res,params);
+
+	// Get data
+	Promise.all([
+        utils.blockchainRequest('get','/disasters')
+	]).then(pageData => {
+		let disasters = pageData[0];
+
+		// Render page
+        let params = {
+            template: 'index',
+            data: {
+                disasters:disasters,
+				userName:req.session.userData.dName,
+				organizations:req.session.userData.org
+            }
+        };
+        utils.render(req,res,params);
+
+	}).catch(err => {
+		res.send(err);
+	});
+
 }
 
 function setupAll(req, res) {
@@ -15,8 +32,24 @@ function setupAll(req, res) {
     }).catch(err => {
         res.send(err);
     });
+}
 
-    }
+function getDisasters() {
+    // Get data from blockchain server
+    return utils.blockchainRequest('get','/disasters').then(disasters => {
+
+        // Render Page
+        const pageConfig = {
+            template: "internal/disaster/disasterList",
+            pageTitle: "Current Natural Disaster List",
+            data: { disasters: disasters}
+        };
+        _render(req,res,pageConfig);
+
+    }).catch(err => {
+        res.send(err);
+    });
+}
 
 module.exports = {
 	render: _render,

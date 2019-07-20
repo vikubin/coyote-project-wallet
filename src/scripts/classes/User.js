@@ -136,7 +136,7 @@ class User{
 
             // Send to DB
             return userDB.insert(userData, this.uid).then(() => {
-                return Promise.resolve('Pushed to DB');
+                return Promise.resolve(this);
             }).catch((err) => {
                 return Promise.reject(Error(err));
             });

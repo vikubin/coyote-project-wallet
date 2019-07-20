@@ -4,6 +4,9 @@ img.loading {
 .loading {
   display: none; }
 
+.card-header > button {
+  float: right; }
+
 #bodyContainer {
   margin-top: 40px; }
 

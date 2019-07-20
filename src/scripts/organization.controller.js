@@ -126,7 +126,7 @@ function newOrg(req,res) {
     };
 
     let newOrg = new Org(orgData);
-    newOrg.push().then(()=>{
+    newOrg.createDonorEntry().then(()=>{
 
         let creator = new User({uid:req.session.userData.uid});
         return creator.get();

@@ -4,8 +4,9 @@ const axios = require('axios');
  *
  *	@param {Object} req - The express request object
  *	@param {Object} res - The express response object
- *	@param {Object} params - The parameters used to display the template
+ *	@param {object} params - The parameters used to display the template
  *	@param {string} params.template - the name of the view to render 
+ *	@param {object} params.data - Data to feed to the page
  *	@param {string} layout - Layout to use. Defaults to 'main'.
  *
  *	Context Metadata

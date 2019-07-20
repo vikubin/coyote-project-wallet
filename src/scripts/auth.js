@@ -147,16 +147,19 @@ function register(req,res) {
 
             // Create the user
             let newUser = new User(userData);
-            newUser.push().then(() => {
+            // No need to push separately as createDonorEntry does this
+            newUser.createDonorEntry().then(() => {
 
                 // Login
-                loginUser(userData.email,userData.pass,req).then(()=>{
-                    res.redirect('/index');
-                }).catch(err => {
-                    res.send(err);
-                });
+                return loginUser(userData.email,userData.pass,req);
+
+            }).then(()=>{
+
+                // Redirect to internal site
+                res.redirect('/index');
 
             }).catch((err) => {
+                // Errors
                 console.log(err);
                 res.send(err);
             });
