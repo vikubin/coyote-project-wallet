@@ -205,7 +205,7 @@ function isOrgMember(uid,oid){
 /**
  * Lists all users in the DB
  * @param {string=} resultType - 'length', 'ids', 'idName', or other (default)
- * @returns {Promise<>}
+ * @returns {Promise}
  */
 function listUsers(resultType){
     return userDB.list().then(userList =>{

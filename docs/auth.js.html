@@ -36,6 +36,7 @@ const cloudant = Cloudant({
 const userDB = cloudant.db.use('users');
 const bcrypt = require('bcrypt');
 const User = require('./classes/User');
+const Org = require('./classes/Org');
 const uuidv4 = require('uuid/v4');
 
 
@@ -148,13 +149,20 @@ function register(req,res) {
 
     // TODO: Validate
 
+    let org;
+    if(req.body.organization === 'none'){
+        org = [];
+    }else{
+        org = [req.body.organization];
+    }
+
     let uid = uuidv4();
     const userData = {
         uid: uid,
         fName: req.body.fName,
         lName: req.body.lName,
         dName: req.body.fName + ' ' + req.body.lName,
-        org: [req.body.organization],
+        org: org,
         email: req.body.email,
         pass: req.body.pass1
     };
@@ -167,16 +175,19 @@ function register(req,res) {
 
             // Create the user
             let newUser = new User(userData);
-            newUser.push().then(() => {
+            // No need to push separately as createDonorEntry does this
+            newUser.createDonorEntry().then(() => {
 
                 // Login
-                loginUser(userData.email,userData.pass,req).then(()=>{
-                    res.redirect('/index');
-                }).catch(err => {
-                    res.send(err);
-                });
+                return loginUser(userData.email,userData.pass,req);
+
+            }).then(()=>{
+
+                // Redirect to internal site
+                res.redirect('/index');
 
             }).catch((err) => {
+                // Errors
                 console.log(err);
                 res.send(err);
             });
@@ -186,10 +197,108 @@ function register(req,res) {
     });
 }
 
+
+// Permissions
+
+/**
+ * Is a user admin of an organization?
+ * @param {string} uid - User's ID
+ * @param {string} oid - Organization ID
+ * @returns {Promise&lt;boolean>} - True if uid is admin of oid; false otherwise
+ */
+function isOrgAdmin(uid,oid){
+    let org = new Org({oid:oid});
+    return org.get().then(()=>{
+        return Promise.resolve(org.isAdmin(uid));
+    }).catch(err => {
+        return Promise.reject(err);
+    });
+}
+
+/**
+ * Is a user member of an organization?
+ * @param {string} uid - User's ID
+ * @param {string} oid - Organization ID
+ * @returns {Promise&lt;boolean>} - True if uid is member of oid; false otherwise
+ */
+function isOrgMember(uid,oid){
+    let org = new Org({oid:oid});
+    return org.get().then(()=>{
+        return Promise.resolve(org.isMember(uid));
+    }).catch(err => {
+        return Promise.reject(err);
+    });
+}
+
+/**
+ * Lists all users in the DB
+ * @param {string=} resultType - 'length', 'ids', 'idName', or other (default)
+ * @returns {Promise}
+ */
+function listUsers(resultType){
+    return userDB.list().then(userList =>{
+
+        switch (resultType){
+            case 'length':
+                return Promise.resolve(userList.total_rows);
+            case 'ids':
+
+                let idArray = [];   // For return values
+                userList.rows.forEach(row => {
+                    idArray.push(row.id);
+                });
+
+                return Promise.resolve(idArray);
+            case 'idName':
+
+                let idNameObj = {}; // For return values
+                let i = userList.total_rows;
+
+                return new Promise((resolve,reject)=>{
+                    userList.rows.forEach(row => {
+
+                        userDB.get(row.id).then(userData => {
+                            idNameObj[row.id] = userData.dName;
+                            i--;
+                            if(i === 0){
+                                resolve(idNameObj);
+                            }
+                        }).catch(err => {
+                            reject(err);
+                        });
+                    });
+                });
+
+            default:
+
+                let returnObj = []; // For return values
+                let totalRows = userList.total_rows;
+
+                return new Promise((resolve,reject)=>{
+                    userList.rows.forEach(row => {
+
+                        userDB.get(row.id).then(userData => {
+                            returnObj.push(userData);
+                            totalRows--;
+                            if(totalRows === 0){
+                                resolve(returnObj);
+                            }
+                        }).catch(err => {
+                            reject(err);
+                        });
+                    });
+                });
+        }
+    }).catch(err => {
+        return Promise.reject(err);
+    })
+}
+
 module.exports = {
     loginUser,
     register,
-    fetchUser
+    fetchUser,
+    listUsers
 };</code></pre>
         </article>
     </section>
@@ -200,13 +309,13 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Org.html">Org</a></li><li><a href="User.html">User</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_render">_render</a></li><li><a href="global.html#blockchainRequest">blockchainRequest</a></li><li><a href="global.html#checkPass">checkPass</a></li><li><a href="global.html#fetchUser">fetchUser</a></li><li><a href="global.html#getPageTitle">getPageTitle</a></li><li><a href="global.html#hashPass">hashPass</a></li><li><a href="global.html#listOrgs">listOrgs</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#newOrg">newOrg</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#uidFromEmail">uidFromEmail</a></li><li><a href="global.html#utils">utils</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Org.html">Org</a></li><li><a href="User.html">User</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_render">_render</a></li><li><a href="global.html#blockchainRequest">blockchainRequest</a></li><li><a href="global.html#checkPass">checkPass</a></li><li><a href="global.html#fetchUser">fetchUser</a></li><li><a href="global.html#generateOptionList">generateOptionList</a></li><li><a href="global.html#getPageTitle">getPageTitle</a></li><li><a href="global.html#hashPass">hashPass</a></li><li><a href="global.html#isOrgAdmin">isOrgAdmin</a></li><li><a href="global.html#isOrgMember">isOrgMember</a></li><li><a href="global.html#listOrgs">listOrgs</a></li><li><a href="global.html#listUsers">listUsers</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#newOrg">newOrg</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#uidFromEmail">uidFromEmail</a></li><li><a href="global.html#utils">utils</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Jul 19 2019 00:06:49 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sat Jul 20 2019 14:19:51 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

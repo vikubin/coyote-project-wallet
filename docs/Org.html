@@ -307,6 +307,39 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>donorID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The user's associated donorID in the blockchain</td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -351,7 +384,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line25">line 25</a>
+        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line24">line 24</a>
     </li></ul></dd>
     
 
@@ -508,7 +541,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line175">line 175</a>
+        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line230">line 230</a>
     </li></ul></dd>
     
 
@@ -663,7 +696,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line103">line 103</a>
+        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line155">line 155</a>
     </li></ul></dd>
     
 
@@ -818,7 +851,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line218">line 218</a>
+        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line273">line 273</a>
     </li></ul></dd>
     
 
@@ -855,6 +888,279 @@
     <dd>
         
 <span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="delete"><span class="type-signature"></span>delete<span class="signature">()</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Deletes organization user from the database
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line309">line 309</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="existsInDB"><span class="type-signature"></span>existsInDB<span class="signature">(oid<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;boolean>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Checks if org is in DB
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>oid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Optional</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line130">line 130</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;boolean></span>
 
 
     </dd>
@@ -985,7 +1291,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line38">line 38</a>
+        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line45">line 45</a>
     </li></ul></dd>
     
 
@@ -1022,6 +1328,324 @@
     <dd>
         
 <span class="param-type">Promise.&lt;this></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="isAdmin"><span class="type-signature"></span>isAdmin<span class="signature">(uid)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Check if a uid is an admin of the Org
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>uid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">User ID to check</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line292">line 292</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - True if admin; False otherwise
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="isMember"><span class="type-signature"></span>isMember<span class="signature">(uid)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Check if a uid is an member of the Org
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>uid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">User ID to check</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line301">line 301</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - True if member; False member
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
 
 
     </dd>
@@ -1091,7 +1715,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line62">line 62</a>
+        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line72">line 72</a>
     </li></ul></dd>
     
 
@@ -1246,7 +1870,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line200">line 200</a>
+        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line255">line 255</a>
     </li></ul></dd>
     
 
@@ -1401,7 +2025,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line139">line 139</a>
+        <a href="classes_Org.js.html">classes/Org.js</a>, <a href="classes_Org.js.html#line191">line 191</a>
     </li></ul></dd>
     
 
@@ -1465,13 +2089,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Org.html">Org</a></li><li><a href="User.html">User</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_render">_render</a></li><li><a href="global.html#blockchainRequest">blockchainRequest</a></li><li><a href="global.html#checkPass">checkPass</a></li><li><a href="global.html#fetchUser">fetchUser</a></li><li><a href="global.html#getPageTitle">getPageTitle</a></li><li><a href="global.html#hashPass">hashPass</a></li><li><a href="global.html#listOrgs">listOrgs</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#newOrg">newOrg</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#uidFromEmail">uidFromEmail</a></li><li><a href="global.html#utils">utils</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Org.html">Org</a></li><li><a href="User.html">User</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_render">_render</a></li><li><a href="global.html#blockchainRequest">blockchainRequest</a></li><li><a href="global.html#checkPass">checkPass</a></li><li><a href="global.html#fetchUser">fetchUser</a></li><li><a href="global.html#generateOptionList">generateOptionList</a></li><li><a href="global.html#getPageTitle">getPageTitle</a></li><li><a href="global.html#hashPass">hashPass</a></li><li><a href="global.html#isOrgAdmin">isOrgAdmin</a></li><li><a href="global.html#isOrgMember">isOrgMember</a></li><li><a href="global.html#listOrgs">listOrgs</a></li><li><a href="global.html#listUsers">listUsers</a></li><li><a href="global.html#loginUser">loginUser</a></li><li><a href="global.html#newOrg">newOrg</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#render">render</a></li><li><a href="global.html#uidFromEmail">uidFromEmail</a></li><li><a href="global.html#utils">utils</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Jul 19 2019 00:06:49 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sat Jul 20 2019 14:19:52 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
