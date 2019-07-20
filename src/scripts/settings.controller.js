@@ -16,7 +16,7 @@ function render(req,res) {
 
         // Render Page
         utils.render(req, res, {
-            template:"settings",
+            template:"internal/settings/settings",
             data: userData
         });
 

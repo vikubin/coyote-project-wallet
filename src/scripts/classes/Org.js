@@ -19,15 +19,22 @@ class Org{
      * @param {string=} orgData.createdBy
      * @param {array=}  orgData.admins
      * @param {array=}  orgData.members
+     * @param {string=} orgData.donorID - The user's associated donorID in the blockchain
      */
     constructor (orgData = {}){
+        console.log('Constructing Org with data: ', orgData);
         this.oid = orgData.oid;
         this.name = orgData.name;
         this.createdBy = orgData.createdBy;
         this.admins = orgData.admins;       // Array of UIDs
         this.members = orgData.members;     // Array of UIDs
+        this.donorID = orgData.donorID;
+        this._id = orgData._id;
+        this._rev = orgData._rev;
 
+        // Dependency Injection
         this.User = require('./User');
+        this.utils = require('../utils');
     }
 
     /**
@@ -48,6 +55,7 @@ class Org{
             this.createdBy = data.createdBy;
             this.admins = data.admins;
             this.members = data.members;
+            this.donorID = data.donorID;
             this._id = data._id;
             this._rev = data._rev;
 
@@ -86,13 +94,55 @@ class Org{
             name: this.name,
             createdBy: this.createdBy,
             admins: this.admins,
-            members: this.members
+            members: this.members,
+            donorID: this.donorID
         };
 
-        // Send to DB
-        return orgDB.insert(orgData, this.oid).then(() => {
-            return Promise.resolve();
-        }).catch((err) => {
+        return this.existsInDB().then(exists => {
+            console.log('Exists: ' + exists);
+            if(exists !== false){
+                // Update Record
+                if(this._id === undefined || this._rev === undefined){
+                    return Promise.reject(Error('Missing required _id and _rev vars for user update'))
+                }
+
+                // Insert vars required for update
+                orgData._id = this._id;
+                orgData._rev = this._rev;
+            }
+
+            // Send to DB
+            return orgDB.insert(orgData, this.oid).then(() => {
+                return Promise.resolve();
+            }).catch((err) => {
+                return Promise.reject(err);
+            });
+        }).catch(err => {
+            return Promise.reject(err);
+        });
+    }
+
+    /**
+     * Checks if org is in DB
+     * @param {string=} oid - Optional
+     * @returns {Promise<boolean>}
+     */
+    existsInDB(oid){
+        if (oid === undefined){
+            oid = this.oid;
+        }
+        console.log('Checking if ' + oid + ' exists in DB.');
+
+        return orgDB.find({selector: {"oid": {"$eq":oid}}}).then(result => {
+
+            // No matching orgs
+            if(result.docs.length === 0){
+                return Promise.resolve(false);
+            }
+
+            // Exactly one matching org
+            return Promise.resolve(true);
+        }).catch(err => {
             return Promise.reject(err);
         });
     }
@@ -139,7 +189,7 @@ class Org{
      * @returns {Promise}
      */
     removeMember(uid){
-        console.log('starting removemember with uid: ' + uid);
+        console.log('starting removeMember() with uid: ' + uid);
 
         // Input validation
         if(uid === undefined){
@@ -252,6 +302,10 @@ class Org{
         return (this.members.includes(uid));
     }
 
+    /**
+     * Deletes organization user from the database
+     * @returns {Promise}
+     */
     delete(){
 
         // Remove all users
@@ -301,6 +355,21 @@ class Org{
             return Promise.reject(err);
         })
 
+    }
+
+    createDonorEntry(){
+        // Send data to blockchain
+        return this.utils.blockchainRequest('post','/donor/new',{
+            type:'org',
+            name:this.name,
+            wallet_id: this.oid
+        }).then(donorID => {
+            // Update DB w/ donor ID
+            this.donorID = donorID;
+            return this.push();
+        }).catch(err => {
+            return Promise.reject(err);
+        });
     }
 }
 

@@ -26,7 +26,7 @@ const render = {
 
             // Render Page
             utils.render(req, res, {
-                template:"organization",
+                template:"internal/organization/organization",
                 data: org
             });
 
@@ -40,7 +40,7 @@ const render = {
      * @param {object} res
      */
     creationForm(req,res){
-        utils.render(req,res,{template:'organizationNew'});
+        utils.render(req,res,{template:'internal/organization/organizationNew'});
     }
 };
 
@@ -51,8 +51,6 @@ const render = {
  */
 function listOrgs(resultType){
     return orgDB.list().then(orgList =>{
-
-        console.log(orgList);   // For testing
 
         switch (resultType){
             case 'length':
@@ -128,7 +126,7 @@ function newOrg(req,res) {
     };
 
     let newOrg = new Org(orgData);
-    newOrg.push().then(()=>{
+    newOrg.createDonorEntry().then(()=>{
 
         let creator = new User({uid:req.session.userData.uid});
         return creator.get();

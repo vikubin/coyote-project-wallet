@@ -11,7 +11,7 @@ const utils = require('./utils');
 
 function _render(req,res,pageConfig={}) {
 	let params = {
-		template: pageConfig.template || 'disaster',
+		template: pageConfig.template || 'internal/disaster/disaster',
 		pageTitle: pageConfig.pageTitle || '',
 		data: pageConfig.data || {}
 	};
@@ -28,7 +28,7 @@ function disasterDetail({ req, res }) {
 
     	// Render Page
         let pageConfig = {};
-        pageConfig.template = 'disasterDetails';
+        pageConfig.template = 'internal/disaster/disasterDetails';
         pageConfig.data = disasterData;
         pageConfig.pageTitle = `${disasterData.city}, ${disasterData.country}`;
         _render(req,res,pageConfig);
@@ -46,7 +46,7 @@ function listDisasters({ req, res }) {
 
         // Render Page
         const pageConfig = {
-            template: "disasterList",
+            template: "internal/disaster/disasterList",
             pageTitle: "Current Natural Disaster List",
             data: { disasters: disasters}
         };
@@ -80,7 +80,7 @@ function newDisaster({ req, res}) {
 
     // Render Page
     const pageConfig = {
-        template: "disasterNew",
+        template: "internal/disaster/disasterNew",
         pageTitle: "New Disaster Form"
     };
     _render(req,res,pageConfig);

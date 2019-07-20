@@ -1,2 +1,4 @@
-let test = 'test';
-let test2 = 'test';
+function loading(){
+    $('.container').hide();
+    $('.loading').show('');
+}

@@ -1,3 +1,16 @@
+// Loading GIF & Content
+img.loading{
+  margin: calc(50vh - 150px) calc(50vw - 100px);
+}
+.loading{
+  display: none;
+}
+
+// Buttons in card headers
+.card-header > button {
+  float: right;
+}
+
 #bodyContainer{
   margin-top: 40px;
 }
