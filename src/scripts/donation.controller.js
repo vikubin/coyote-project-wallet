@@ -2,7 +2,7 @@ const utils = require('./utils');
 
 function _render(req,res,pageData={}) {
 	let params = {
-		template: "donation",
+		template: "internal/donations/donation",
 		pageTile: "Donations"
 	};
 	utils.render(req,res,params);
@@ -19,7 +19,7 @@ function listDonations({ req, res, donationBlockchain, resourceBlockchain, donor
         console.log('allDonations: ',donationData.allDonations);
 
         const pageConfig = {
-            template: "listDonations",
+            template: "internal/donations/donationList",
             pageTitle: "Donations for this disaster",
             data: donationData
         };

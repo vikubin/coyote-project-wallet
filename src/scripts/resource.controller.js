@@ -2,7 +2,7 @@ const utils = require('./utils');
 
 function _render(req,res,pageData={}) {
 	let params = {
-		template: 'resource',
+		template: 'internal/resource/resource',
 		pageData: pageData
 	};
 	utils.render(req,res,params);
@@ -24,7 +24,7 @@ function listResources({ req, res, resourceBlockchain}) {
     });
 }
 
-function addInitialResources({ req, res, resourceBlockchain }) {
+function addInitialResources({ req, res }) {
 
     // Get data from blockchain server
     utils.blockchainRequest('get','/resources/addInitial').then(data => {

@@ -139,7 +139,7 @@ class Org{
      * @returns {Promise}
      */
     removeMember(uid){
-        console.log('starting removemember with uid: ' + uid);
+        console.log('starting removeMember() with uid: ' + uid);
 
         // Input validation
         if(uid === undefined){
@@ -252,6 +252,10 @@ class Org{
         return (this.members.includes(uid));
     }
 
+    /**
+     * Deletes organization user from the database
+     * @returns {Promise}
+     */
     delete(){
 
         // Remove all users

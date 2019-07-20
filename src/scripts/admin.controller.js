@@ -9,6 +9,7 @@ const auth = require('./auth');
  */
 function render(req,res) {
 
+    // Get data for page
     Promise.all([
         organization.listOrgs()
     ]).then(data => {
@@ -19,7 +20,7 @@ function render(req,res) {
 
         // Render Page
         utils.render(req, res, {
-            template:"admin",
+            template:"internal/admin/admin",
             data: pageData
         });
 

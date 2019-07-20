@@ -3,7 +3,7 @@ const utils = require('./utils');
 function _render(req,res,pageConfig={}) {
 	console.log('^^^^ rendering donor');
 	let params = {
-        template: pageConfig.template || 'donor',
+        template: pageConfig.template || 'internal/donor/donor',
         pageTitle: pageConfig.pageTitle || '',
         data: pageConfig.data || {}
 	};
@@ -18,7 +18,7 @@ function donorDetail({ req, res, donorBlockchain }) {
     }).then(donorData => {
 
         let pageConfig = {};
-        pageConfig.template = 'donorDetails';
+        pageConfig.template = 'internal/donor/donorDetails';
         pageConfig.data = donorData;
         pageConfig.pageTitle = `${donorData.city}, ${donorData.country}`;
         _render(req,res,pageConfig);
@@ -35,7 +35,7 @@ function listDonors({ req, res, donorBlockchain }) {
 
         // Render Page
         const pageConfig = {
-            template: "donorList",
+            template: "internal/donor/donorList",
             pageTitle: "Current Donor List",
             data: { donors: donors}
         };
@@ -50,7 +50,7 @@ function newDonor({ req, res}) {
 
     // Render Page
     const pageConfig = {
-        template: "donorNew",
+        template: "internal/donor/donorNew",
         pageTitle: "New Donor Form"
     };
     _render(req,res,pageConfig);

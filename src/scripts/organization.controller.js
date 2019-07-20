@@ -26,7 +26,7 @@ const render = {
 
             // Render Page
             utils.render(req, res, {
-                template:"organization",
+                template:"internal/organization/organization",
                 data: org
             });
 
@@ -40,7 +40,7 @@ const render = {
      * @param {object} res
      */
     creationForm(req,res){
-        utils.render(req,res,{template:'organizationNew'});
+        utils.render(req,res,{template:'internal/organization/organizationNew'});
     }
 };
 
