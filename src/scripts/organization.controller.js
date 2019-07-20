@@ -52,8 +52,6 @@ const render = {
 function listOrgs(resultType){
     return orgDB.list().then(orgList =>{
 
-        console.log(orgList);   // For testing
-
         switch (resultType){
             case 'length':
                 return Promise.resolve(orgList.total_rows);

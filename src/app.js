@@ -322,6 +322,19 @@ app.get('/settings', (req,res) => {
 app.get('/admin', (req,res) => {
     admin.render(req,res);
 });
+app.get('/admin/initDonors',(req,res)=>{
+	donor.initDonors().then(()=>{
+        admin.render(req,res,{
+        	type: 'success',
+			text: 'Donor blockchain initialized with data from DB.'
+		});
+	}).catch(err=>{
+        admin.render(req,res,{
+            type: 'danger',
+            text: err
+        });
+	})
+});
 
 
 // 404 Error

@@ -20,6 +20,7 @@ class User{
      * @param {string=} userData.lName - The user's Last Name
      * @param {string=} userData.email - The user's Email
      * @param {array=} userData.org - The user's Organizations (Array of org IDs)
+     * @param {string=} userData.donorID - The user's associated donorID in the blockchain
      */
     constructor (userData = {}){
         console.log('Constructing User with data: ', userData);
@@ -30,6 +31,9 @@ class User{
         this.dName = userData.fName + ' ' + userData.lName;
         this.email = userData.email;
         this.org = userData.org;
+        this.donorID = userData.donorID;
+        this._id = userData._id;
+        this._rev = userData._rev;
 
         // Process password
         if(userData.pass !== undefined){
@@ -43,7 +47,9 @@ class User{
             this.pass = undefined;
         }
 
+        // Dependency Injection
         this.Org = require('./Org');
+        this.utils = require('../utils');
     }
 
     /**
@@ -65,6 +71,7 @@ class User{
             this.email = data.email;
             this.org = data.org;
             this.pass = data.pass;
+            this.donorID = data.donorID;
             this._id = data._id;
             this._rev = data._rev;
 
@@ -110,6 +117,7 @@ class User{
             dName: this.dName,
             email: this.email,
             org: this.org,
+            donorID: this.donorID,
             pass: this.pass
         };
 
@@ -169,7 +177,6 @@ class User{
         }).catch(err => {
             return Promise.reject(err);
         });
-
     }
 
     /**
@@ -318,6 +325,24 @@ class User{
 
         // Update DB
         return this.push();
+    }
+
+
+    createDonorEntry(){
+        // Send data to blockchain
+        return this.utils.blockchainRequest('post','/donor/new',{
+            type:'user',
+            fname:this.fName,
+            lname:this.lName,
+            email:this.email,
+            wallet_id: this.uid
+        }).then(donorID => {
+            // Update DB w/ donor ID
+            this.donorID = donorID;
+            return this.push();
+        }).catch(err => {
+            return Promise.reject(err);
+        });
     }
 }
 

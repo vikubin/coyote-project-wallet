@@ -199,19 +199,21 @@ function isOrgMember(uid,oid){
     });
 }
 
-
+/**
+ * Lists all users in the DB
+ * @param {string=} resultType - 'length', 'ids', 'idName', or other (default)
+ * @returns {Promise<>}
+ */
 function listUsers(resultType){
-    return orgDB.list().then(orgList =>{
-
-        console.log(orgList);   // For testing
+    return userDB.list().then(userList =>{
 
         switch (resultType){
             case 'length':
-                return Promise.resolve(orgList.total_rows);
+                return Promise.resolve(userList.total_rows);
             case 'ids':
 
                 let idArray = [];   // For return values
-                orgList.rows.forEach(row => {
+                userList.rows.forEach(row => {
                     idArray.push(row.id);
                 });
 
@@ -219,13 +221,13 @@ function listUsers(resultType){
             case 'idName':
 
                 let idNameObj = {}; // For return values
-                let i = orgList.total_rows;
+                let i = userList.total_rows;
 
                 return new Promise((resolve,reject)=>{
-                    orgList.rows.forEach(row => {
+                    userList.rows.forEach(row => {
 
-                        orgDB.get(row.id).then(orgData => {
-                            idNameObj[row.id] = orgData.name;
+                        userDB.get(row.id).then(userData => {
+                            idNameObj[row.id] = userData.dName;
                             i--;
                             if(i === 0){
                                 resolve(idNameObj);
@@ -238,14 +240,14 @@ function listUsers(resultType){
 
             default:
 
-                let returnObj = {}; // For return values
-                let totalRows = orgList.total_rows;
+                let returnObj = []; // For return values
+                let totalRows = userList.total_rows;
 
                 return new Promise((resolve,reject)=>{
-                    orgList.rows.forEach(row => {
+                    userList.rows.forEach(row => {
 
-                        orgDB.get(row.id).then(orgData => {
-                            returnObj[row.id] = orgData;
+                        userDB.get(row.id).then(userData => {
+                            returnObj.push(userData);
                             totalRows--;
                             if(totalRows === 0){
                                 resolve(returnObj);
@@ -264,5 +266,6 @@ function listUsers(resultType){
 module.exports = {
     loginUser,
     register,
-    fetchUser
+    fetchUser,
+    listUsers
 };

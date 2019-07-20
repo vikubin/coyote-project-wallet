@@ -1,6 +1,13 @@
+{{#if alertShow}}
+<div class="alert alert-{{alertType}}" role="alert">
+    {{alertText}}
+</div>
+{{/if}}
 
-<a href='/setup'>Setup All Blockchains at Once</a><br>
-<a href='/organization/new'>Create Organization</a>
+
+<a href='/setup' onclick="loading()">Setup All Blockchains at Once</a><br>
+<a href='/organization/new' onclick="loading()">Create Organization</a><br>
+<a href="/admin/initDonors" onclick="loading()">Init donors to blockchain from DB</a>
 
 <div class="card">
     <h2 class="card-header">Organizations</h2>
@@ -16,8 +23,8 @@
         <tbody>
         {{#each orgList}}
         <tr>
-            <td><a href="/organization/{{oid}}" onclick="">{{name}}</a></td>
-            <td><a href="/organization/{{oid}}/delete" class="btn btn-danger btn-sm" onclick="deleteOrg('{{oid}}')">Delete</a></td>
+            <td><a href="/organization/{{oid}}"  onclick="loading()">{{name}}</a></td>
+            <td><a href="/organization/{{oid}}/delete" class="btn btn-danger btn-sm" onclick="loading()">Delete</a></td>
         </tr>
         {{/each}}
         </tbody>
