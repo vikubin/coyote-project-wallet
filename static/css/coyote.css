@@ -12,7 +12,7 @@
   z-index: 2;
   text-align: center; }
   #register-hero-showcase font-family
-  #hero-header {
+#hero-header {
     padding-left: 20px; }
 
 #register-icon-showcase {
@@ -30,10 +30,8 @@
   padding-top: 75px; }
 
 /* Right Side Div- Showcase */
-.login-container {
+#login-container {
   height: calc(50vh - 35px);
   margin-bottom: -20px;
   z-index: 2;
-  background-image: url("/Stock-Mountain.png"); }
-
-/*# sourceMappingURL=coyote.css.map */
+  background-image: url("/static/img/Stock-Mountain.png"); }
