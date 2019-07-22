@@ -11,7 +11,9 @@ img.loading {
   margin-top: 40px; }
 
 #register-showcase {
-  background-color: coral; }
+  background-image: url("/s/img/register-bg.png"); }
 
 #register-form {
   padding-top: 75px; }
+
+/*# sourceMappingURL=coyote.css.map */
