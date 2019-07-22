@@ -10,8 +10,11 @@ img.loading {
 #bodyContainer {
   margin-top: 40px; }
 
-#register-showcase {
+#hero-showcase {
   background-image: url("/s/img/register-bg.png"); }
+
+#hero-header {
+  padding-left: 20px; }
 
 #register-form {
   padding-top: 75px; }
