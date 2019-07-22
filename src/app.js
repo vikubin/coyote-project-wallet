@@ -335,6 +335,9 @@ app.get('/admin/initDonors',(req,res)=>{
         });
 	})
 });
+app.get('/admin/plainBlockchains',(req,res)=>{
+    admin.render(req,res);
+});
 
 
 // 404 Error
