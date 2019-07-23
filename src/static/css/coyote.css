@@ -8,8 +8,10 @@ img.loading {
   float: right; }
 
 #hero-showcase {
-  background-image: url("/s/img/register-bg.png");
-  padding: 100px; }
+  background-image: url("/s/img/mesh-gradient.jpg");
+  height: calc(50% + 25px);
+  padding: 100px;
+  font-family: "Helvetica Neue, Helvetica, sans-serif"; }
 
 #icon-showcase {
   margin-bottom: 20px; }
