@@ -7,13 +7,22 @@ img.loading {
 .card-header > button {
   float: right; }
 
-#bodyContainer {
-  margin-top: 40px; }
+#hero-showcase {
+  background-image: url("/s/img/mesh-gradient.jpg");
+  height: calc(50% + 25px);
+  padding: 100px;
+  font-family: "Helvetica Neue, Helvetica, sans-serif"; }
 
-#register-showcase {
-  background-image: url("/s/img/register-bg.png"); }
+#icon-showcase {
+  margin-bottom: 20px; }
+
+.col-lg-4 {
+  text-align: center; }
 
 #register-form {
   padding-top: 75px; }
+
+body {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; }
 
 /*# sourceMappingURL=coyote.css.map */
