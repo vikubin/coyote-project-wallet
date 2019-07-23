@@ -5,10 +5,8 @@
                 <div class="showcase jumbotron jumbotron-fluid" id="hero-showcase">
                     <header>
                         <div id="hero-header">
-                            <h1>
-                                Join <br>
-                                Our <br>
-                                Efforts <br>
+                            <h1 id="jumbotron-header">
+                                Join Our Efforts
                             </h1>
                             <p> help us relieve beneficiaries in afflicted areas one donation at a time. </p>
                         </div>
@@ -17,19 +15,20 @@
                 <div id="icon-showcase">
                     <div class="row">
                         <div class="col-lg-4">
-                            <img src=("/s/img/register-admin-icon.png") alt="">
+                            <img src="/s/img/register-admin-icon.png" alt="">
+                            <h5>Admins</h5>
+                            <p> Groups and collective individuals working together to achieve a common goal.</p>
                         </div>
                         <div class="col-lg-4">
-                            <img src=("/s/img/register-donor-icon.png") alt="">
+                            <img src="/s/img/register-donor-icon.png" alt="">
+                            <h5>Donors</h5>
+                            <p> Groups and collective individuals working together to achieve a common goal.</p>
                         </div>
                         <div class="col-lg-4">
-                            <img src=("/s/img/register-org-icon.png") alt="">
+                            <img src="/s/img/register-org-icon.png" alt="">
+                            <h5>Organizations</h5>
+                            <p> Groups and collective individuals working together to achieve a common goal.</p>
                         </div>
-                    </div>
-                    <div class="row">
-                        <h5>Lorem ipsum dolor sit amet.</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                            Accusantium labore quibusdam reprehenderit?</p>
                     </div>
                 </div>
             </div>
@@ -37,8 +36,8 @@
                 <form action="/register" method="post">
                     <!-- Page One: First, Last, Organization -->
                     <div id="page1" >
+                        <img src="/s/img/coyote-logo.png">
                         <h1>Register</h1>
-
                         <div class="form-group">
                             <label for="fName">First Name</label>
                             <input id="fName" name="fName" type="text" aria-label="First name" class="form-control" required>
@@ -56,7 +55,7 @@
                                 {{{orgList}}}
                             </select>
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block" onclick="$('#page1').hide();$('#page2').show()">Next</button>
+                        <button class="btn btn-lg btn-primary btn-block" id="next-cta" onclick="$('#page1').hide();$('#page2').show()">Next</button>
                     </div>
 
                     <!-- Page Two: Email, Password, Repeat Password -->
@@ -76,7 +75,7 @@
                             <label for="pass2">Repeat Password</label>
                             <input id="pass2" name="pass2" type="password" class="form-control" required>
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+                        <button class="btn btn-lg btn-primary btn-block" id="register-cta" type="submit">Register</button>
                         <div class="text-right">
                             <p>Already have an account? <a href="/login">Log In</a></p>
                         </div>
