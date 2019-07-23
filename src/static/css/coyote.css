@@ -7,7 +7,7 @@ img.loading {
 .card-header > button {
   float: right; }
 
-.jumbotron {
+#hero-showcase {
   background-image: url("/s/img/register-bg.png");
   padding: 100px; }
 
