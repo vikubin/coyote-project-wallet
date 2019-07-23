@@ -1,5 +1,5 @@
 // Loading GIF & Content
-img.loading{
+img.loading {
   margin: calc(50vh - 150px) calc(50vw - 100px);
 }
 .loading{
@@ -11,15 +11,22 @@ img.loading{
   float: right;
 }
 
-#bodyContainer{
-  margin-top: 40px;
+.jumbotron {
+  background-image: url("/s/img/register-bg.png");
+  padding: 100px;
 }
+
 
 #icon-showcase {
   margin-bottom: 20px;
 }
-
+ .col-lg-4 {
+   text-align: center;
+ }
 #register-form {
   padding-top: 75px;
 }
 
+body {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}

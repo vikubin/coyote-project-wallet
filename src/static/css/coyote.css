@@ -7,13 +7,20 @@ img.loading {
 .card-header > button {
   float: right; }
 
-#bodyContainer {
-  margin-top: 40px; }
+.jumbotron {
+  background-image: url("/s/img/register-bg.png");
+  padding: 100px; }
 
 #icon-showcase {
   margin-bottom: 20px; }
 
+.col-lg-4 {
+  text-align: center; }
+
 #register-form {
   padding-top: 75px; }
+
+body {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; }
 
 /*# sourceMappingURL=coyote.css.map */
