@@ -1,8 +1,11 @@
-New and improved donor list.  We need Dylan's pretty HTML here<br><br>
 
-<ol>
-{{#each donors}}
-    <li><a href='/donor/detail/{{donorID}}'>{{fname}} {{lname}} (ID: {{donorID}})</a></li>
-{{/each}}
-</ol>
-<p><a href='/donor'>Donor Page</a></p>
+<div class="container-fluid">
+    New and improved donor list.  We need Dylan's pretty HTML here<br><br>
+
+    <ol>
+    {{#each donors}}
+        <li><a href='/donor/detail/{{donorID}}'>{{fname}} {{lname}} (ID: {{donorID}})</a></li>
+    {{/each}}
+    </ol>
+    <p><a href='/donor'>Donor Page</a></p>
+</div>

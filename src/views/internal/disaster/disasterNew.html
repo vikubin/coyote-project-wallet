@@ -1,67 +1,72 @@
-<!-- TEST -->
-<script>
-    function fillDefaults(){
-        document.getElementsByName("latitude")[0].value = "41N 17' 45\"";
-        document.getElementsByName("longitude")[0].value = "103W 22' 55\"";
-        document.getElementsByName("city")[0].value = "Nassau";
-        document.getElementsByName("state")[0].value = "";
-        document.getElementsByName("country")[0].value = "Bahamas";
-        document.getElementsByName("type")[0].value = "hurricane";
-        document.getElementsByName("description")[0].value = "Category 5 hurricane.";
-    }
-</script>
-<button onclick="fillDefaults()">Fill Defaults (TESTING)</button><br>
-<!-- END TEST -->
+
+<div class="container-fluid">
+
+    <!-- TEST -->
+    <script>
+        function fillDefaults(){
+            document.getElementsByName("latitude")[0].value = "41N 17' 45\"";
+            document.getElementsByName("longitude")[0].value = "103W 22' 55\"";
+            document.getElementsByName("city")[0].value = "Nassau";
+            document.getElementsByName("state")[0].value = "";
+            document.getElementsByName("country")[0].value = "Bahamas";
+            document.getElementsByName("type")[0].value = "hurricane";
+            document.getElementsByName("description")[0].value = "Category 5 hurricane.";
+        }
+    </script>
+    <button onclick="fillDefaults()">Fill Defaults (TESTING)</button><br>
+    <!-- END TEST -->
 
 
-<form method="get" action='/api/blockchain/disaster/add'>
+    <form method="get" action='/api/blockchain/disaster/add'>
 
-    <!-- Latitude -->
-    <p>
-        <label>Latitude</label><br>
-        <input type="text" name="latitude">
-    </p>
+        <!-- Latitude -->
+        <p>
+            <label>Latitude</label><br>
+            <input type="text" name="latitude">
+        </p>
 
-    <!-- Longitude -->
-    <p>
-        <label>Longitude</label><br>
-        <input type="text" name="longitude">
-    </p>
+        <!-- Longitude -->
+        <p>
+            <label>Longitude</label><br>
+            <input type="text" name="longitude">
+        </p>
 
-    <!-- City -->
-    <p>
-        <label>City</label><br>
-        <input type="text" name="city">
-    </p>
+        <!-- City -->
+        <p>
+            <label>City</label><br>
+            <input type="text" name="city">
+        </p>
 
-    <!-- State -->
-    <p>
-        <label>State</label><br>
-        <input type="text" name="state">
-    </p>
+        <!-- State -->
+        <p>
+            <label>State</label><br>
+            <input type="text" name="state">
+        </p>
 
-    <!-- Country -->
-    <p>
-        <label>Country</label><br>
-        <input type="text" name="country">
-    </p>
+        <!-- Country -->
+        <p>
+            <label>Country</label><br>
+            <input type="text" name="country">
+        </p>
 
-    <!-- Disaster Type -->
-    <p>
-        <label>Disaster Type</label><br>
-        <select name="type">
-            <option value="hurricane" selected>Hurricane</option>
-            <option value="tornado" disabled>Tornado</option>
-            <option value="wildfire" disabled>Wildfire</option>
-        </select>
-    </p>
+        <!-- Disaster Type -->
+        <p>
+            <label>Disaster Type</label><br>
+            <select name="type">
+                <option value="hurricane" selected>Hurricane</option>
+                <option value="tornado" disabled>Tornado</option>
+                <option value="wildfire" disabled>Wildfire</option>
+            </select>
+        </p>
 
-    <!-- Description -->
-    <p>
-        <label>Description</label><br>
-        <textarea name="description"></textarea>
-    </p>
+        <!-- Description -->
+        <p>
+            <label>Description</label><br>
+            <textarea name="description"></textarea>
+        </p>
 
-    <!-- Submit -->
-    <input type="submit" value="Submit">
-</form>
+        <!-- Submit -->
+        <input type="submit" value="Submit">
+    </form>
+
+</div>

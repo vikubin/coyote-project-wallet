@@ -1,13 +1,16 @@
-Here are the current donations for {{disasterInfo.type}} in {{disasterInfo.city}}, {{disasterInfo.country}}
 
-{{#each allDonations}}
-	<br><br>
-	{{this.donorData.fname}} {{this.donorData.lname}}
-	<br>
+<div class="container-fluid">
+	Here are the current donations for {{disasterInfo.type}} in {{disasterInfo.city}}, {{disasterInfo.country}}
 
-	{{#each this.resources}}
-		{{this.quantity}} {{this.description}} ({{this.UNNumber}})
+	{{#each allDonations}}
+		<br><br>
+		{{this.donorData.fname}} {{this.donorData.lname}}
 		<br>
-	{{/each}}
 
-{{/each}}
+		{{#each this.resources}}
+			{{this.quantity}} {{this.description}} ({{this.UNNumber}})
+			<br>
+		{{/each}}
+
+	{{/each}}
+</div>
