@@ -1,12 +1,70 @@
 {{#if disasterData.error}}
 	{{disasterData.error}}
 {{else}}
-	<p><b>Location:</b> {{disasterData.city}}, {{#if disasterData.state}}{{disasterData.state}}, {{/if}}{{disasterData.country}}</p>
-	<p><b>Disaster Type:</b> {{disasterData.type}}</p>
-	<p><b>Latitude:</b> {{disasterData.latitude}}</p>
-	<p><b>Longitude:</b> {{disasterData.longitude}}</p>
-	<p><b>Description:</b> {{disasterData.description}}</p>
-	<p>&nbsp;</p>
+
+	<div class="row">
+		<div class="col-lg-4">
+			<h2>Disaster Details</h2>
+			<hr>
+			<p><b>Location:</b> {{disasterData.city}}, {{#if disasterData.state}}{{disasterData.state}}, {{/if}}{{disasterData.country}}</p>
+			<p><b>Disaster Type:</b> {{disasterData.type}}</p>
+			<p><b>Latitude:</b> {{disasterData.latitude}}</p>
+			<p><b>Longitude:</b> {{disasterData.longitude}}</p>
+			<p><b>Description:</b> {{disasterData.description}}</p>
+			<hr>
+			<p><a href='/disaster/list'>Back to Disaster List</a></p>
+			<p><a href="/donation/addDonation?disaster=3uea4userkmnj">Donate Resources</a></p>
+
+		</div>
+		<div class="col-lg-4">
+			<h2>Requested Resources</h2>
+			<table class="table">
+				<thead>
+				<tr>
+					<th scope="col">Resource</th>
+					<th scope="col">Quantity</th>
+					<th>Options</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Water Bottles (HARDCODED)</td>
+						<td>5000 Bottles</td>
+						<td><a href="/donation/addDonation?disaster=3uea4userkmnj?resource=sdfajfsnje">Donate</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-lg-4">
+			<h2>Pledged Resources</h2>
+			<table class="table">
+				<thead>
+				<tr>
+					<th scope="col">Resource</th>
+					<th scope="col">Quantity</th>
+					<th scope="col">Status</th>
+					<th scope="col">Donor</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Blankets (HARDCODED)</td>
+						<td>400 Blankets</td>
+						<td>In transit, ETA: 2019-10-07</td>
+						<td>Bob Deemer</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
 {{/if}}
 
-<p><a href='/disaster/list'>Back to Disaster List</a></p>
