@@ -1,72 +1,137 @@
 
-<div class="container-fluid">
+<div class="container">
 
-    <!-- TEST -->
-    <script>
-        function fillDefaults(){
-            document.getElementsByName("latitude")[0].value = "41N 17' 45\"";
-            document.getElementsByName("longitude")[0].value = "103W 22' 55\"";
-            document.getElementsByName("city")[0].value = "Nassau";
-            document.getElementsByName("state")[0].value = "";
-            document.getElementsByName("country")[0].value = "Bahamas";
-            document.getElementsByName("type")[0].value = "hurricane";
-            document.getElementsByName("description")[0].value = "Category 5 hurricane.";
-        }
-    </script>
-    <button onclick="fillDefaults()">Fill Defaults (TESTING)</button><br>
-    <!-- END TEST -->
+    <form method="get" action='/api/blockchain/disaster/add' id="newDisasterForm">
 
+        <h1>Disaster Entry Form</h1><br>
+        <h2>Disaster Details</h2>
+        <br>
 
-    <form method="get" action='/api/blockchain/disaster/add'>
+        <div class="form-row">
 
-        <!-- Latitude -->
-        <p>
-            <label>Latitude</label><br>
-            <input type="text" name="latitude">
-        </p>
+            <div class=" col-md-3">
+                <!-- Disaster Type -->
+                <div class="form-group">
+                    <label for="type">Disaster Type</label><br>
+                    <select class="form-control" name="type" id="type">
+                        <option value="hurricane" selected>Hurricane</option>
+                        <option value="tornado">Tornado</option>
+                        <option value="wildfire">Wildfire</option>
+                    </select>
+                </div>
 
-        <!-- Longitude -->
-        <p>
-            <label>Longitude</label><br>
-            <input type="text" name="longitude">
-        </p>
+                <!-- Creator -->
+                <div class="form-group">
+                    <label for="owner">Creator / Disaster Administrator</label><br>
+                    <select class="form-control" name="owner" id="owner">
+                        <option value="{{uid}}" selected>{{userName}}</option>
+                        {{orgMemberOfOptionList}}
+                    </select>
+                    <small class="form-text text-muted">This can be yourself, or an organization you belong to.</small>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="description">Description</label><br>
+                    <textarea class="form-control" name="description" id="description"></textarea>
+                </div>
+            </div>
+        </div>
 
-        <!-- City -->
-        <p>
-            <label>City</label><br>
-            <input type="text" name="city">
-        </p>
+        <br><br>
 
-        <!-- State -->
-        <p>
-            <label>State</label><br>
-            <input type="text" name="state">
-        </p>
+        <h2>Disaster Location</h2>
+        <br>
 
+        <div class="form-row">
+
+            <!-- Latitude -->
+            <div class="form-group col-md-6">
+                <label for="latitude">Latitude</label><br>
+                <input class="form-control" type="text" name="latitude" id="latitude">
+            </div>
+
+            <!-- Longitude -->
+            <div class="form-group col-md-6">
+                <label for="longitude">Longitude</label><br>
+                <input class="form-control" type="text" name="longitude" id="longitude">
+            </div>
+
+        </div>
+        <div class="form-row">
+
+            <!-- City -->
+            <div class="form-group col-md-6">
+                <label for="city">City</label><br>
+                <input class="form-control" type="text" name="city" id="city">
+            </div>
+
+            <!-- State -->
+            <div class="form-group col-md-3">
+                <label for="state">State</label><br>
+                <input class="form-control" type="text" name="state" id="state">
+            </div>
+
+            <!-- Country -->
+            <div class="form-group col-md-3">
+                <label for="country">Country</label><br>
+                <input class="form-control" type="text" name="country" id="country">
+            </div>
+
+        </div>
+
+        <br><br>
+
+        <h2>Shipping Address</h2>
+        <br>
+
+        <!-- Recipient Name -->
+        <div class="form-group">
+            <label for="recipientName">Recipient Name</label><br>
+            <input class="form-control" type="text" name="recipientName" id="recipientName">
+            <small class="form-text text-muted">This should be a person ath the site capable of receiving shipments.</small>
+        </div>
+        <!-- Recipient Address Line 1 -->
+        <div class="form-group">
+            <label for="addressLine1">Address Line 1</label><br>
+            <input class="form-control" type="text" name="recipientAddressLine1" id="addressLine1">
+        </div>
+        <!-- Recipient Address Line 2 -->
+        <div class="form-group">
+            <label for="addressLine2">Address Line 2</label><br>
+            <input class="form-control" type="text" name="recipientAddressLine2" id="addressLine2">
+        </div>
+        <div class="form-row">
+            <!-- City -->
+            <div class="form-group col-md-6">
+                <label for="recipientCity">City</label><br>
+                <input class="form-control" type="text" name="recipientCity" id="recipientCity">
+            </div>
+
+            <!-- State -->
+            <div class="form-group col-md-4">
+                <label for="recipientState">State</label><br>
+                <input class="form-control" type="text" name="recipientState" id="recipientState">
+            </div>
+
+            <!-- State -->
+            <div class="form-group col-md-2">
+                <label for="recipientPostalCode">Postal Code</label><br>
+                <input class="form-control" type="text" name="recipientPostalCode" id="recipientPostalCode">
+            </div>
+
+        </div>
         <!-- Country -->
-        <p>
-            <label>Country</label><br>
-            <input type="text" name="country">
-        </p>
-
-        <!-- Disaster Type -->
-        <p>
-            <label>Disaster Type</label><br>
-            <select name="type">
-                <option value="hurricane" selected>Hurricane</option>
-                <option value="tornado" disabled>Tornado</option>
-                <option value="wildfire" disabled>Wildfire</option>
-            </select>
-        </p>
-
-        <!-- Description -->
-        <p>
-            <label>Description</label><br>
-            <textarea name="description"></textarea>
-        </p>
+        <div class="form-group">
+            <label for="recipientCountry">Country</label><br>
+            <input class="form-control" type="text" name="recipientCountry" id="recipientCountry">
+        </div>
 
         <!-- Submit -->
-        <input type="submit" value="Submit">
+        <br><br><br>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+        <br><br><br>
     </form>
 
 </div>

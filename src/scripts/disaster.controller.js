@@ -60,15 +60,25 @@ function listDisasters({ req, res }) {
 function addDisaster(req,res) {
 
 	utils.blockchainRequest('post','/disaster/new',{
+        type: req.query.type,
+        owner: req.body.owner,
+        creator: req.session.userData.uid,
+        description: req.query.description,
         latitude: req.query.latitude,
         longitude: req.query.longitude,
         city: req.query.city,
         state: req.query.state,
         country: req.query.country,
-        type: req.query.type,
-        description: req.query.description
+        recipientName: req.query.recipientName,
+        recipientAddressLine1: req.query.recipientAddressLine1,
+        recipientAddressLine2: req.query.recipientAddressLine2,
+        recipientCity: req.query.recipientCity,
+        recipientState: req.query.recipientState,
+        recipientPostalCode: req.query.recipientPostalCode,
+        recipientCountry: req.query.recipientCountry,
+        isActive: true
 	}).then(disasterID => {
-        res.redirect(303, `/disaster/detail/${disasterID}`);
+        res.redirect(303, `/disaster/requestResources/${disasterID}`);
 	}).catch(err => {
 		res.send(err);
 	});
