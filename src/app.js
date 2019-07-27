@@ -137,9 +137,9 @@ app.get('/setup', (req, res) => {
 
 
 // Disaster Page
-app.get('/disaster', (req,res) => {
+/*app.get('/disaster', (req,res) => {
 	disaster.render(req,res,{});
-});
+});*/ // depreciated?
 // List Disasters
 app.get('/disasters?/list', (req,res) => {
 	disaster.listDisasters({ req, res });
