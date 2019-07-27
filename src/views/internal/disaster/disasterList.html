@@ -1,10 +1,43 @@
 <div class="container-fluid">
-	New and improved disaster list.  We need Dylan's pretty HTML here<br><br>
 
-	<ol>
-	{{#each disasters}}
-		<li><a href='/disaster/detail/{{disasterID}}'>{{type}} in {{city}}, {{country}}</a> (<a href='/donations/list/{{disasterID}}'>list donations</a>)</li>
-	{{/each}}
-	</ol>
-	<p><a href='/disaster'>Disaster Page</a></p>
+	<h1>All Disasters</h1>
+
+	<table class="table">
+		<thead>
+		<tr>
+			<th scope="col">type</th>
+			<th scope="col">owner</th>
+			<th scope="col">ownerType</th>
+			<th scope="col">creator</th>
+			<th scope="col">description</th>
+			<th scope="col">Coordinates</th>
+			<th scope="col">Disaster Location</th>
+			<th scope="col">isActive</th>
+			<th scope="col">Recipient Data</th>
+		</tr>
+		</thead>
+		<tbody>
+		{{#each disasters}}
+		<tr>
+			<td><a href="/disaster/details/{{disasterID}}">{{type}}</a></td>
+			<td>{{owner}}</td>
+			<td>{{ownerType}}</td>
+			<td>{{creator}}</td>
+			<td>{{description}}</td>
+			<td>{{latitude}}, {{longitude}}</td>
+			<td>
+				{{city}}, {{state}}<br>
+				{{country}}
+			</td>
+			<td>{{isActive}}</td>
+			<td>
+				{{recipientName}}<br>
+				{{recipientAddressLine1}}<br>
+				{{recipientAddressLine2}}<br>
+				{{recipientCity}}, {{recipientState}} {{recipientPostalCode}}, {{recipientCountry}}
+			</td>
+		</tr>
+		{{/each}}
+		</tbody>
+	</table>
 </div>

@@ -148,14 +148,18 @@ app.get('/disasters?/list', (req,res) => {
 app.get('/disasters?/new', (req,res) => {
 	disaster.newDisaster({ req, res});
 });
+app.post('/disasters?/new', (req,res) => {
+    disaster.addDisaster(req,res);
+});
 // Disaster Details
 app.get('/disasters?/detail/:disasterID', (req,res) => {
 	disaster.disasterDetail({ req, res });
 });
-// Add Disaster
-app.get('/api/blockchain/disaster/add', (req,res) => {
-    console.log("'/api/blockchain/disaster/add' received data: ", req.query);
-    disaster.addDisaster(req,res);
+app.get('/disaster/requestResources/:disasterID',(req,res)=>{
+    disaster.addResourcesForm(req,res);
+});
+app.post('/disaster/requestResources/:disasterID',(req,res)=>{
+    disaster.addResourcesSubmit(req,res);
 });
 
 

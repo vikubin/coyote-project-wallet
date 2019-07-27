@@ -57,7 +57,7 @@
                     <h5 class="card-title">My Organization(s)</h5>
                     <p class="card-text">
                         {{#each organizations}}
-                        <a href="/organization/{{this}}">{{this}} (TODO: Replace with name)</a>
+                        <a href="/organization/{{this.oid}}">{{this.name}}</a>
                         {{/each}}
                     </p>
                 </div>
