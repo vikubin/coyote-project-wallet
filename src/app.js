@@ -213,68 +213,12 @@ app.get('/donation', (req,res) => {
 	donation.render(req,res,pageData);
 });
 // Add Donation
-app.get('/donor/addDonation', (req,res) => {
-
-    // TODO: Modify this to work with the split app
-
-	// get donor info from donor #1
-	const donorBlockData = donorBlockchain.chain[1];
-	const donor = donorBlockData.donors[0];
-
-	// get disaster info from disaster #1
-	const disasterBlockData = disasterBlockchain.chain[1];
-	const disaster = disasterBlockData.disasters[0];
-
-
-	const resources = [
-		{
-			UNNumber: "UN-WATER-001",
-			Qty: 1000
-		},
-
-		{
-			UNNumber: "UN-FOOD-001",
-			Qty: 2000
-		},
-		{
-			UNNumber: "UN-CLOTHING-001",
-			Qty: 2500
-		}
-	];
-
-
-	const donationObject = {
-		dateTime: new Date(),
-		disasterID: disaster.disasterID,
-		donorID: donor.donorID,
-		resources: resources,
-		sendDate: null,
-		arriveDate: null
-	};
-
-	donationBlockchain.addDonationToPendingDonations(donationBlockchain.createNewDonation(donationObject));
-	donationBlockchain.mine();
-	res.redirect(303, `/donations/list`);
+app.get('/donation/addDonation', (req,res) => {
+    donation.addDonationPage(req,res);
 });
-// List Donations
-/*app.get('/donations?/list', (req,res) => {
-	// list all donations
-	const donationBlock = donationBlockchain.chain[1];
-	const donations = donationBlock.donations;
-
-	let output = "";
-
-	donations.forEach((donation) =>{
-		output += `(Disaster ID: ${donation.disasterID}<br>DOnor ID: ${donation.donorID}<br>Resources:<br>`;
-		
-		donation.resources.forEach((resource) => {
-			output += `Quantity: ${resource.Qty} / UN Part number: ${resource.UNNumber}<br>`;
-		});
-		output += "<br><br>";
-	});
-
-	res.send(`<a href='/donation'>Donation Home</a><br><br>${output}`);
-});*/ // Obsolete?
+app.post('/donation/addDonation', (req,res) => {
+    donation.addDonation(req,res);
+});
 // List all donated resouces for a given disaster
 app.get('/donations/list/:disasterID', (req,res) => {
 	donation.listDonations({ req, res });

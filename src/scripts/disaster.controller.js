@@ -25,7 +25,9 @@ function disasterDetail({ req, res }) {
     Promise.all([
         utils.blockchainRequest('get','/disaster',{
             disasterID: req.params.disasterID
-        })
+        }),
+        getRequestedResources(req.params.disasterID),
+        getDonations(req.params.disasterID)
     ]).then(disasterData => {
 
     	// Render Page
@@ -33,6 +35,7 @@ function disasterDetail({ req, res }) {
         pageConfig.template = 'internal/disaster/disasterDetails';
         pageConfig.data = disasterData[0];
         pageConfig.data.requestedResources = disasterData[1];
+        pageConfig.data.donations = disasterData[2];
         pageConfig.pageTitle = `${disasterData.city}, ${disasterData.country}`;
         _render(req,res,pageConfig);
 
@@ -130,6 +133,24 @@ function addResourcesSubmit(req,res) {
         res.redirect('/disaster/detail/' + disasterID);
     }).catch(err => {
         res.send(err);
+    });
+}
+
+function getRequestedResources(disasterID) {
+    return utils.blockchainRequest('get','/resources/disaster/' + disasterID).then(resourceArray => {
+        console.log('Resource Array: ', resourceArray);
+        return Promise.resolve(resourceArray);
+    }).catch(err => {
+        return Promise.reject(err);
+    });
+}
+
+function getDonations(disasterID) {
+    return utils.blockchainRequest('get','/donations/disaster/' + disasterID).then(donationArray => {
+        console.log('Donation Array: ', donationArray);
+        return Promise.resolve(donationArray);
+    }).catch(err => {
+       return Promise.reject(err);
     });
 }
 

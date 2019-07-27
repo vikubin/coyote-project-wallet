@@ -1,10 +1,23 @@
 
 <div class="container-fluid">
 
-    <h2>This is Project Coyote!</h2><br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">This is Project Coyote!</h3>
+                    <p class="card-text lead">
+                        The blockchain-based solution for coordinating and tracking donations for natural disasters.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="card bg-light">
                 <div class="card-header">
                     <a href="/resource">Resources</a>
@@ -48,7 +61,7 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-7">
             <div class="card">
                 <div class="card-header">
                     Welcome, {{userName}}
@@ -59,6 +72,10 @@
                         {{#each organizations}}
                         <a href="/organization/{{this.oid}}">{{this.name}}</a>
                         {{/each}}
+                    </p>
+                    <h5 class="card-title">My Disasters</h5>
+                    <p class="card-text">
+                        <a href="">Test Disaster</a>
                     </p>
                 </div>
             </div>

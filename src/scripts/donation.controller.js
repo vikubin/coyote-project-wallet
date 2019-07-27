@@ -33,7 +33,32 @@ function listDonations({ req, res, donationBlockchain, resourceBlockchain, donor
 } // end listDonations
 
 
+
+function addDonationPage(req,res){
+
+    Promise.all([
+
+    ]).then(donationData => {
+
+
+
+
+    }).catch(err => {
+        console.log(err);
+    });
+
+
+}
+
+function addDonation(req,res){
+
+
+
+}
+
 module.exports = {
 	render: _render,
-	listDonations
+	listDonations,
+    addDonationPage,
+    addDonation
 };

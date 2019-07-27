@@ -40,7 +40,9 @@ const render = {
      * @param {object} res
      */
     creationForm(req,res){
-        utils.render(req,res,{template:'internal/organization/organizationNew'});
+        utils.render(req,res, {
+            template:'internal/organization/organizationNew'
+        });
     }
 };
 

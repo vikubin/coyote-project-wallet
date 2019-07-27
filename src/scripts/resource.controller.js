@@ -38,6 +38,8 @@ function addInitialResources({ req, res }) {
 
 } // end addInitialResources()
 
+
+
 module.exports = {
 	render: _render,
 	listResources,
