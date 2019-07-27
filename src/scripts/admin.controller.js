@@ -21,66 +21,47 @@ function render(req,res,alertMessage) {
 
     console.log(req.path);
 
-    switch (req.path){
-        case '/admin':
 
-            // Get data for page
-            Promise.all([
-                organization.listOrgs()
-            ]).then(data => {
+    // Get data for page
+    Promise.all([
+        organization.listOrgs()
+    ]).then(data => {
 
-                let pageData = {
-                    orgList: data[0],
-                    alertShow:alertShow,
-                    alertType:alertType,
-                    alertText:alertText
-                };
+        let pageData = {
+            orgList: data[0],
+            alertShow:alertShow,
+            alertType:alertType,
+            alertText:alertText
+        };
 
-                // Render Page
-                utils.render(req, res, {
-                    template:"internal/admin/admin",
-                    data: pageData
-                });
+        // Render Page
+        utils.render(req, res, {
+            template:"internal/admin/admin",
+            data: pageData
+        });
 
-            }).catch(err => {
-                res.send(err);
-            });
-            break;
-        case '/admin/plainBlockchains':
+    }).catch(err => {
+        res.send(err);
+    });
 
-            // Get data for page
-            Promise.all([
-                utils.blockchainRequest('get','/blockchain/all')
-            ]).then(data => {
+}
 
-                res.json(data[0]);
+function setupAll(req, res) {
 
-/*                let pageData = {
-                    disasterBlockchain: JSON.stringify(data[0].disasterBlockchain, null, 2),
-                    donationBlockchain: JSON.stringify(data[0].donationBlockchain, null, 2),
-                    resourceBlockchain: JSON.stringify(data[0].resourceBlockchain, null, 2),
-                    donorBlockchain: JSON.stringify(data[0].donorBlockchain, null, 2),
-                    alertShow:alertShow,
-                    alertType:alertType,
-                    alertText:alertText
-                };
-
-                // Render Page
-                utils.render(req, res, {
-                    template:"internal/admin/plainBlockchains",
-                    data: pageData
-                });*/
-
-            }).catch(err => {
-                res.send(err);
-            });
-            break;
-        default:
-            res.send(Error('Invalid admin path'));
-
-    }
+    utils.blockchainRequest('get','/setup').then(()=>{
+        render(req,res,{
+            type: 'success',
+            text: 'Blockchains have been setup with test data.'
+        });
+    }).catch(err => {
+        render(req,res,{
+            type: 'danger',
+            text: err
+        });
+    });
 }
 
 module.exports = {
-    render
+    render,
+    setupAll
 };

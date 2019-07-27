@@ -54,14 +54,6 @@ function _render(req,res,pageConfig={}) {
 
 }
 
-function setupAll(req, res) {
-
-	utils.blockchainRequest('get','/setup').then(()=>{
-        res.send('All set.  A disaster, donot, 6 resource, and one donation has been initialized.<br><br><a href="/">Home</a>');
-    }).catch(err => {
-        res.send(err);
-    });
-}
 
 function getDisasters() {
     // Get data from blockchain server
@@ -81,6 +73,5 @@ function getDisasters() {
 }
 
 module.exports = {
-	render: _render,
-	setupAll
+	render: _render
 };
