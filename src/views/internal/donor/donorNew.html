@@ -1,42 +1,45 @@
-<!-- TEST -->
-<script>
-    function fillDefaults(){
-        document.getElementsByName("email")[0].value = "bdeemer@gmail.com";
-        document.getElementsByName("fname")[0].value = "Bob";
-        document.getElementsByName("lname")[0].value = "Deemer";
-        document.getElementsByName("organization")[0].value = "Project Coyote";
-    }
-</script>
-<button onclick="fillDefaults()">Fill Defaults (TESTING)</button><br>
-<!-- END TEST -->
+
+<div class="container-fluid">
+    <!-- TEST -->
+    <script>
+        function fillDefaults(){
+            document.getElementsByName("email")[0].value = "bdeemer@gmail.com";
+            document.getElementsByName("fname")[0].value = "Bob";
+            document.getElementsByName("lname")[0].value = "Deemer";
+            document.getElementsByName("organization")[0].value = "Project Coyote";
+        }
+    </script>
+    <button onclick="fillDefaults()">Fill Defaults (TESTING)</button><br>
+    <!-- END TEST -->
 
 
-<form method="get" action='/api/blockchain/donor/add'>
+    <form method="get" action='/api/blockchain/donor/add'>
 
-    <!-- Latitude -->
-    <p>
-        <label>Email</label><br>
-        <input type="email" name="email">
-    </p>
+        <!-- Latitude -->
+        <p>
+            <label>Email</label><br>
+            <input type="email" name="email">
+        </p>
 
-    <!-- Longitude -->
-    <p>
-        <label>First Name</label><br>
-        <input type="text" name="fname">
-    </p>
+        <!-- Longitude -->
+        <p>
+            <label>First Name</label><br>
+            <input type="text" name="fname">
+        </p>
 
-    <!-- City -->
-    <p>
-        <label>Last Name</label><br>
-        <input type="text" name="lname">
-    </p>
+        <!-- City -->
+        <p>
+            <label>Last Name</label><br>
+            <input type="text" name="lname">
+        </p>
 
-    <!-- State -->
-    <p>
-        <label>Organization</label><br>
-        <input type="text" name="organization">
-    </p>
+        <!-- State -->
+        <p>
+            <label>Organization</label><br>
+            <input type="text" name="organization">
+        </p>
 
-    <!-- Submit -->
-    <input type="submit" value="Submit">
-</form>
+        <!-- Submit -->
+        <input type="submit" value="Submit">
+    </form>
+</div>

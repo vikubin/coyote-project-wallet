@@ -1,0 +1,132 @@
+<div class="container">
+    <form method="post" action="/disaster/requestResources/{{disasterID}}">
+        <h1>Request resources for disaster</h1>
+
+        <div id="resources">
+            <hr>
+
+            <div class="resource">
+                <h3>Resource 1</h3>
+
+                <!-- Title -->
+                <div class="form-group">
+                    <label for="0title">Title</label><br>
+                    <input class="form-control" type="text" name="0title" id="0title">
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="0description">Description</label><br>
+                    <textarea class="form-control" name="0description" id="0description"></textarea>
+                </div>
+
+
+                <div class="form-row">
+                    <!-- NSN -->
+                    <div class="form-group col-md-6">
+                        <label for="0nsn">NSN (optional)</label><br>
+                        <input class="form-control" type="text" name="0nsn" id="0nsn">
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="form-group col-md-3">
+                        <label for="0quantity">Quantity (Number)</label><br>
+                        <input class="form-control" type="number" name="0quantity" id="0quantity">
+                    </div>
+
+                    <!-- Units -->
+                    <div class="form-group col-md-3">
+                        <label for="0units">Units of Quantity</label><br>
+                        <input class="form-control" type="text" name="0units" id="0units">
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+        </div>
+
+        <!-- Buttons-->
+        <div class="text-center">
+            <a class="btn btn-info" onclick="addResource()">Add another resource</a>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+
+    </form>
+</div>
+
+<script>
+    let resourceNumber = 0;
+    function addResource(){
+        resourceNumber++;
+
+        $('#resources').append('<div class="resource">\n' +
+            '                <h3>Resource ' +
+            resourceNumber +
+            '</h3>\n' +
+            '                <!-- Title -->\n' +
+            '                <div class="form-group">\n' +
+            '                    <label for="' +
+            resourceNumber +
+            'title">Title</label><br>\n' +
+            '                    <input class="form-control" type="text" name="' +
+            resourceNumber +
+            'title" id="' +
+            resourceNumber +
+            'title">\n' +
+            '                </div>\n' +
+            '\n' +
+            '                <!-- Description -->\n' +
+            '                <div class="form-group">\n' +
+            '                    <label for="' +
+            resourceNumber +
+            'description">Description</label><br>\n' +
+            '                    <textarea class="form-control" name="' +
+            resourceNumber +
+            'description" id="' +
+            resourceNumber +
+            'description"></textarea>\n' +
+            '                </div>\n' +
+            '\n' +
+            '\n' +
+            '                <div class="form-row">\n' +
+            '                    <!-- NSN -->\n' +
+            '                    <div class="form-group col-md-6">\n' +
+            '                        <label for="' +
+            resourceNumber +
+            'nsn">NSN (optional)</label><br>\n' +
+            '                        <input class="form-control" type="text" name="' +
+            resourceNumber +
+            'nsn" id="' +
+            resourceNumber +
+            'nsn">\n' +
+            '                    </div>\n' +
+            '\n' +
+            '                    <!-- Quantity -->\n' +
+            '                    <div class="form-group col-md-3">\n' +
+            '                        <label for="' +
+            resourceNumber +
+            'quantity">Quantity (Number)</label><br>\n' +
+            '                        <input class="form-control" type="number" name="' +
+            resourceNumber +
+            'quantity" id="' +
+            resourceNumber +
+            'quantity">\n' +
+            '                    </div>\n' +
+            '\n' +
+            '                    <!-- Units -->\n' +
+            '                    <div class="form-group col-md-3">\n' +
+            '                        <label for="' +
+            resourceNumber +
+            'units">Units of Quantity</label><br>\n' +
+            '                        <input class="form-control" type="text" name="' +
+            resourceNumber +
+            'units" id="' +
+            resourceNumber +
+            'units">\n' +
+            '                    </div>\n' +
+            '                </div>\n' +
+            '                <hr>\n' +
+            '            </div>');
+    }
+</script>

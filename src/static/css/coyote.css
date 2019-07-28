@@ -16,4 +16,5 @@ img.loading {
 #register-form {
   padding-top: 75px; }
 
-/*# sourceMappingURL=coyote.css.map */
+#newDisasterForm #description {
+  height: 124px; }

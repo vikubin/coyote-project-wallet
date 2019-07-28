@@ -1,4 +1,4 @@
 function loading(){
-    $('.container').hide();
+    $('#bodyContainer').hide();
     $('.loading').show('');
 }

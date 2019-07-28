@@ -40,7 +40,9 @@ const render = {
      * @param {object} res
      */
     creationForm(req,res){
-        utils.render(req,res,{template:'internal/organization/organizationNew'});
+        utils.render(req,res, {
+            template:'internal/organization/organizationNew'
+        });
     }
 };
 
@@ -191,6 +193,20 @@ const admin = {
     }
 };
 
+/**
+ * Gets an organization's name from oid
+ * @param {string} oid - Org ID
+ * @returns {Promise<string|error>} - Promise containing org's name
+ */
+function getOrgName(oid){
+    let newOrg = new Org({oid:oid});
+    return newOrg.get().then(()=>{
+        return Promise.resolve(newOrg.name);
+    }).catch(err=>{
+        return Promise.reject(err);
+    });
+}
+
 
 function deleteOrg(oid) {
 
@@ -213,5 +229,6 @@ module.exports = {
     listOrgs,
     member,
     admin,
-    deleteOrg
+    deleteOrg,
+    getOrgName
 };

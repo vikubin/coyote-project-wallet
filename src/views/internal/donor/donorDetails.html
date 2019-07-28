@@ -2,19 +2,22 @@
     {{donorData.error}}
 {{else}}
 
-Donor details: <br>
-fname: {{donorData.fname}}<br>
-last name: {{donorData.lname}}<br>
-org: {{donorData.organization}}<br>
-donor email: {{donorData.email}}<br>
-Donor ID: {{donorData.donorID}} <br>
-Org Name: {{donorData.name}} <br>
-Donor Type: {{donorData.type}} <br>
-Wallet ID: {{donorData.wallet_id}} <br>
-<p>&nbsp;</p>
-{{/if}}
+
+<div class="container-fluid">
+    Donor details: <br>
+    fname: {{donorData.fname}}<br>
+    last name: {{donorData.lname}}<br>
+    org: {{donorData.organization}}<br>
+    donor email: {{donorData.email}}<br>
+    Donor ID: {{donorData.donorID}} <br>
+    Org Name: {{donorData.name}} <br>
+    Donor Type: {{donorData.type}} <br>
+    Wallet ID: {{donorData.wallet_id}} <br>
+    <p>&nbsp;</p>
+    {{/if}}
 
 
-<a href="/donor/addDonation">Add a donation from this donor</a>
+    <a href="/donor/addDonation">Add a donation from this donor</a>
 
-<p><a href='/donor/list'>Back to Donor List</a></p>
+    <p><a href='/donor/list'>Back to Donor List</a></p>
+</div>

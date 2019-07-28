@@ -1,28 +1,30 @@
 
+<div class="container-fluid">
 
+    <a href='/setup' onclick="loading()">Setup All Blockchains at Once</a><br>
+    <a href='/organization/new' onclick="loading()">Create Organization</a><br>
+    <a href="/admin/initDonors" onclick="loading()">Init donors to blockchain from DB</a><br>
+    <a href="/admin/plainBlockchains">View Blockchains</a>
 
-<a href='/setup' onclick="loading()">Setup All Blockchains at Once</a><br>
-<a href='/organization/new' onclick="loading()">Create Organization</a><br>
-<a href="/admin/initDonors" onclick="loading()">Init donors to blockchain from DB</a>
-
-<div class="card">
-    <h2 class="card-header">Organizations</h2>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#each orgList}}
-        <tr>
-            <td><a href="/organization/{{oid}}"  onclick="loading()">{{name}}</a></td>
-            <td><a href="/organization/{{oid}}/delete" class="btn btn-danger btn-sm" onclick="loading()">Delete</a></td>
-        </tr>
-        {{/each}}
-        </tbody>
-    </table>
+    <div class="card">
+        <h2 class="card-header">Organizations</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each orgList}}
+            <tr>
+                <td><a href="/organization/{{oid}}"  onclick="loading()">{{name}}</a></td>
+                <td><a href="/organization/{{oid}}/delete" class="btn btn-danger btn-sm" onclick="loading()">Delete</a></td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
 </div>

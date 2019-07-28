@@ -1,12 +1,41 @@
 const utils = require('./utils');
+const organization = require('./organization.controller');
 
 function _render(req,res,pageConfig={}) {
 
+    function organizationData(orgArray){
+        let i = orgArray.length;
+        let returnArray = [];
+
+        return new Promise((resolve, reject) => {
+            orgArray.forEach(org => {
+                organization.getOrgName(org).then(orgName => {
+
+                    returnArray.push({
+                        oid:org,
+                        name:orgName
+                    });
+
+                    i--;
+                    if(i === 0){
+                        resolve(returnArray);
+                    }
+                }).catch(err => {
+                    reject([{oid:'none',name:err}]);
+                });
+            });
+        });
+
+    }
+
+
 	// Get data
 	Promise.all([
-        utils.blockchainRequest('get','/disasters')
+        utils.blockchainRequest('get','/disasters'),
+        organizationData(req.session.userData.org)
 	]).then(pageData => {
 		let disasters = pageData[0];
+		console.log(pageData[1]);
 
 		// Render page
         let params = {
@@ -14,7 +43,7 @@ function _render(req,res,pageConfig={}) {
             data: {
                 disasters:disasters,
 				userName:req.session.userData.dName,
-				organizations:req.session.userData.org
+				organizations:pageData[1]
             }
         };
         utils.render(req,res,params);
