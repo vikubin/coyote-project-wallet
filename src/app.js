@@ -132,7 +132,7 @@ app.get('/index', (req,res) => {
 
 // Setup all blockchains TODO: Remove from PROD
 app.get('/setup', (req, res) => {
-    index.setupAll(req,res);
+    admin.setupAll(req,res);
 });
 
 

@@ -171,6 +171,10 @@ function register(req,res) {
 
 
 // Permissions
+function isSiteAdmin(uid){
+    // TODO: Make this work correctly
+    return Promise.resolve(true);
+}
 
 /**
  * Is a user admin of an organization?
@@ -270,5 +274,8 @@ module.exports = {
     loginUser,
     register,
     fetchUser,
-    listUsers
+    listUsers,
+    isSiteAdmin,
+    isOrgAdmin,
+    isOrgMember
 };

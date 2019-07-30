@@ -22,12 +22,17 @@ const render = {
 
         // Get data
         let org = new Org();
-        org.get(orgID).then(()=>{
+        org.get(orgID).then(()=> {
+            return org.isAdmin(req.session.userData.uid);
+        }).then(isOrgAdmin => {
+
+            let pageData = org;
+            pageData.isOrgAdmin = isOrgAdmin;
 
             // Render Page
             utils.render(req, res, {
                 template:"internal/organization/organization",
-                data: org
+                data: pageData
             });
 
         }).catch(err=>{

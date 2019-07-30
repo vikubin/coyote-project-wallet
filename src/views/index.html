@@ -18,50 +18,7 @@
 
     <div class="row">
         <div class="col-md-5">
-            <div class="card bg-light">
-                <div class="card-header">
-                    <a href="/resource">Resources</a>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Resource Links</h5>
-                    <p class="card-text">
-                        <a href='/resource/list'>List Resources</a><br>
-                        <a href='/resource'>Enter Resource info here</a><br>
-                    </p>
-                </div>
-            </div>
 
-            <br>
-
-            <div class="card bg-light">
-                <div class="card-header">
-                    <a href="/donation">Donations</a>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Donation Links</h5>
-                    <p class="card-text">
-                        none
-                    </p>
-                </div>
-            </div>
-
-            <br>
-
-            <div class="card bg-light">
-                <div class="card-header">
-                    <a href="/donor">Donors</a>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Donation Links</h5>
-                    <p class="card-text">
-                        <a href='/donor/list'>List Donors</a><br>
-                        <a href='/donor'>Enter Donors here</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-7">
             <div class="card">
                 <div class="card-header">
                     Welcome, {{userName}}
@@ -80,7 +37,8 @@
                 </div>
             </div>
 
-            <br>
+        </div>
+        <div class="col-md-7">
 
             <div class="card">
                 <h4 class="card-header">
@@ -111,6 +69,13 @@
                         <td><a href="/disaster/detail/{{disasterID}}" class="btn btn-primary btn-sm" onclick="loading()">View</a></td>
                     </tr>
                     {{/each}}
+                    <tr>
+                        <td colspan="4">
+                            <div class="text-center">
+                                <a href="/disasters/list">View more ...</a>
+                            </div>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
