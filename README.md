@@ -1,3 +1,5 @@
+<b>BREAKING CHANGES: Passwords have been changed (7/30/2019). Contact @philku for new ones</b>
+
 # Project Coyote Wallet
 This is the <i>wallet</i> application for project coyote. It functions on
 port 8080 and requires the <i>blockchain</i> application to be running on
