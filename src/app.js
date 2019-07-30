@@ -39,7 +39,7 @@ app.use(session({
     store: new MemcachedStore({
         servers: ['memcached-13484.c14.us-east-1-3.ec2.cloud.redislabs.com:13484'],
         username: 'mc-Qmibs',
-        password: 'spGkyRUqP6Q7Ig5dmMBOKjRO5IpBeOmz'
+        password: '*****'
     })
 }));
 
