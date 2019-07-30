@@ -2,7 +2,7 @@ const Cloudant = require('@cloudant/cloudant');
 const cloudant = Cloudant({
     account:"ServiceId-3433c9c5-2f5e-46a5-8a60-f899ff657dac",
     key:"iernstiverstrybitsichadv",
-    password:"f2b5d372dc13bb39e3c2c94e8866b42e9ef858d3",
+    password:"",
     url:"https://a2777322-7e2f-4f00-88ff-5544d827c57f-bluemix.cloudant.com"
 });
 const userDB = cloudant.db.use('users');
