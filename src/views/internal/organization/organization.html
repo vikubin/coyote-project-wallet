@@ -1,6 +1,11 @@
 
 <div class="container-fluid">
     <h1>{{name}}</h1>
+    {{#if isOrgAdmin}}
+    <a href="organization/admin/{{oid}}">
+        <button class="btn btn-warning">Admin</button>
+    </a>
+    {{/if}}
 
 
     <p>ID: {{oid}}</p>

@@ -36,6 +36,11 @@ function listDonations({ req, res, donationBlockchain, resourceBlockchain, donor
 
 function addDonationPage(req,res){
 
+    console.log(req.query);
+    if(req.query === {}){
+        console.log('No specific request')
+    }
+
     Promise.all([
 
     ]).then(donationData => {
@@ -52,6 +57,9 @@ function addDonationPage(req,res){
 
 function addDonation(req,res){
 
+    utils.blockchainRequest('post','donation/new',{
+
+    })
 
 
 }
